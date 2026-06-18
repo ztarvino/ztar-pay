@@ -3,129 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZTAR PAY</title>
-
+<title>ZTAR PAY - Order Snacks</title>
 <style>
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f5f5f5;
-text-align:center;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f5f5f5;color:#333}
+header{background:linear-gradient(135deg,#000,#333);color:white;padding:25px 15px;text-align:center}
+.logo{width:100px;height:100px;border-radius:50%;object-fit:cover;background:#fff;padding:8px;margin:0 auto 12px;display:block}
+header h1{font-size:28px;letter-spacing:1px}
+.hero{padding:40px 20px;text-align:center;background:white}
+.hero h1{font-size:30px;margin-bottom:8px}
+.products{padding:30px 15px;max-width:1100px;margin:auto}
+.products h2{text-align:center;font-size:24px;margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:white;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,0.1);text-align:center;overflow:hidden}
+.card img{width:100%;height:180px;object-fit:cover}
+.card-body{padding:15px}
+.card h3{font-size:18px;margin-bottom:5px}
+.size-select{width:100%;padding:8px;margin:8px 0;border:1px solid #ddd;border-radius:6px;font-size:14px}
+.price{color:#d62828;font-size:22px;font-weight:bold;margin:8px 0}
+.order-btn{display:block;background:#25D366;color:white;padding:10px;border-radius:6px;text-decoration:none;font-weight:bold;cursor:pointer;border:none;width:100%;font-size:15px}
+.order-btn:hover{background:#1ebe5b}
 
-header{
-background:#000;
-color:white;
-padding:20px;
-}
+/* Popup Form */
+.popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center}
+.popup-content{background:white;padding:25px;border-radius:12px;max-width:400px;width:90%;max-height:90vh;overflow-y:auto}
+.popup-content h3{text-align:center;margin-bottom:15px;color:#000}
+.popup-content input,.popup-content select,.popup-content textarea{width:100%;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:6px;font-size:14px}
+.popup-content button{background:#25D366;color:white;padding:12px;border:none;border-radius:6px;width:100%;font-weight:bold;font-size:15px;cursor:pointer;margin-top:10px}
+.popup-content button:hover{background:#1ebe5b}
+.close-btn{background:#dc3545!important;margin-top:5px!important}
 
-.logo{
-width:120px;
-height:auto;
-display:block;
-margin:0 auto 10px;
-}
-
-.hero{
-padding:40px 20px;
-}
-
-.hero h1{
-font-size:40px;
-margin:10px 0;
-}
-
-.btn{
-display:inline-block;
-background:red;
-color:white;
-padding:12px 25px;
-border-radius:8px;
-text-decoration:none;
-margin-top:15px;
-}
-
-.products{
-padding:30px 15px;
-}
-
-.card{
-background:white;
-padding:20px;
-margin:15px auto;
-max-width:250px;
-border-radius:10px;
-box-shadow:0 2px 10px rgba(0,0,0,0.2);
-}
-
-.price{
-color:red;
-font-size:30px;
-font-weight:bold;
-}
-
-footer{
-background:black;
-color:white;
-padding:20px;
-margin-top:30px;
-}
+footer{background:#000;color:white;padding:25px 15px;margin-top:40px;text-align:center}
+footer p{margin:5px 0;font-size:14px}
+.whatsapp-float{position:fixed;bottom:20px;right:20px;background:#25D366;color:white;border-radius:50%;width:55px;height:55px;display:flex;align-items:center;justify-content:center;font-size:28px;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
-
 <body>
 
 <header>
-
-<img src="Logo.png" class="logo" alt="ZTAR PAY Logo">
-
+<img src="https://via.placeholder.com/100/fff/000?text=ZP" class="logo" alt="ZTAR PAY Logo">
 <h1>ZTAR PAY</h1>
 <p>Pay Smart, Live Smart</p>
-
 </header>
 
 <section class="hero">
-
 <h1>Fresh & Delicious Snacks</h1>
-
 <p>Fast Delivery Across Jaffna</p>
-
-<a href="https://wa.me/94778465161" class="btn">
-Order via WhatsApp
-</a>
-
 </section>
 
 <section class="products">
+<h2>Our Menu</h2>
+<div class="grid">
 
-<h2>Our Products</h2>
-
+<!-- PRODUCT 1 -->
 <div class="card">
+<img src="https://via.placeholder.com/400x300/ffd580/333?text=Mixture" alt="Mixture">
+<div class="card-body">
 <h3>Mixture</h3>
-<p>100g Pack</p>
-<div class="price">Rs.140.00</div>
+<select class="size-select" id="size1" onchange="updatePrice(1)">
+<option value="140|100g">100g - Rs.140</option>
+<option value="260|200g">200g - Rs.260</option>
+<option value="320|250g">250g - Rs.320</option>
+<option value="600|500g">500g - Rs.600</option>
+</select>
+<div class="price" id="price1">Rs.140</div>
+<button class="order-btn" onclick="openForm('Mixture',1)">Order Now</button>
+</div>
 </div>
 
+<!-- PRODUCT 2 -->
 <div class="card">
+<img src="https://via.placeholder.com/400x300/ffcc99/333?text=Pakoda" alt="Pakoda">
+<div class="card-body">
 <h3>Pakoda</h3>
-<p>100g Pack</p>
-<div class="price">Rs.150.00</div>
+<select class="size-select" id="size2" onchange="updatePrice(2)">
+<option value="150|100g">100g - Rs.150</option>
+<option value="280|200g">200g - Rs.280</option>
+<option value="340|250g">250g - Rs.340</option>
+<option value="650|500g">500g - Rs.650</option>
+</select>
+<div class="price" id="price2">Rs.150</div>
+<button class="order-btn" onclick="openForm('Pakoda',2)">Order Now</button>
+</div>
 </div>
 
+<!-- PRODUCT 3 -->
 <div class="card">
+<img src="https://via.placeholder.com/400x300/d9b3ff/333?text=Kadalai" alt="Kadalai">
+<div class="card-body">
 <h3>Kadalai</h3>
-<p>100g Pack</p>
-<div class="price">Rs.110.00</div>
+<select class="size-select" id="size3" onchange="updatePrice(3)">
+<option value="110|100g">100g - Rs.110</option>
+<option value="210|200g">200g - Rs.210</option>
+<option value="250|250g">250g - Rs.250</option>
+<option value="480|500g">500g - Rs.480</option>
+</select>
+<div class="price" id="price3">Rs.110</div>
+<button class="order-btn" onclick="openForm('Kadalai',3)">Order Now</button>
+</div>
 </div>
 
+</div>
 </section>
 
+<!-- ORDER POPUP FORM -->
+<div class="popup" id="orderPopup">
+<div class="popup-content">
+<h3>Place Your Order</h3>
+<form id="orderForm" onsubmit="sendWhatsApp(event)">
+<input type="hidden" id="productName">
+<input type="hidden" id="productSize">
+<input type="hidden" id="productPrice">
+
+<input type="text" id="name" placeholder="Your Name *" required>
+<input type="tel" id="phone" placeholder="Phone Number *" required>
+<textarea id="address" placeholder="Delivery Address *" rows="3" required></textarea>
+<input type="date" id="date" required>
+<input type="time" id="time" required>
+
+<button type="submit">Send Order via WhatsApp</button>
+<button type="button" class="close-btn" onclick="closeForm()">Cancel</button>
+</form>
+</div>
+</div>
+
+<a class="whatsapp-float" href="https://wa.me/94778465161" target="_blank">💬</a>
+
 <footer>
-<p>VINOTH</p>
-<p>📞 0778465161</p>
+<p><b>Contact Details</b></p>
+<p>👤 VINOTH</p>
+<p>📞 0778465161 / 0778465161</p>
 <p>📧 ztarvino@gmail.com</p>
 <p>📍 Jaffna, Sri Lanka</p>
+<p style="margin-top:10px;font-size:12px;opacity:0.7">© 2026 ZTAR PAY</p>
 </footer>
+
+<script>
+let currentProduct = '';
+let currentSize = '';
+let currentPrice = '';
+
+function updatePrice(id){
+let sel = document.getElementById('size'+id);
+let val = sel.value.split('|');
+document.getElementById('price'+id).innerText = 'Rs.' + val[0];
+}
+
+function openForm(product, id){
+currentProduct = product;
+let sel = document.getElementById('size'+id);
+let val = sel.value.split('|');
+currentPrice = val[0];
+currentSize = val[1];
+
+document.getElementById('productName').value = product;
+document.getElementById('productSize').value = currentSize;
+document.getElementById('productPrice').value = currentPrice;
+
+// Default today date
+let today = new Date().toISOString().split('T')[0];
+document.getElementById('date').value = today;
+
+document.getElementById('orderPopup').style.display = 'flex';
+}
+
+function closeForm(){
+document.getElementById('orderPopup').style.display = 'none';
+document.getElementById('orderForm').reset();
+}
+
+function sendWhatsApp(e){
+e.preventDefault();
+let name = document.getElementById('name').value;
+let phone = document.getElementById('phone').value;
+let address = document.getElementById('address').value;
+let date = document.getElementById('date').value;
+let time = document.getElementById('time').value;
+
+let message = `*ZTAR PAY - New Order*%0A%0A`+
+`Product: ${currentProduct}%0A`+
+`Size: ${currentSize}%0A`+
+`Price: Rs.${currentPrice}%0A%0A`+
+`*Customer Details*%0A`+
+`Name: ${name}%0A`+
+`Phone: ${phone}%0A`+
+`Address: ${address}%0A`+
+`Delivery Date: ${date}%0A`+
+`Delivery Time: ${time}`;
+
+window.open(`https://wa.me/94778465161?text=${message}`, '_blank');
+closeForm();
+}
+</script>
 
 </body>
 </html>
