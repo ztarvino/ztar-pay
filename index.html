@@ -119,9 +119,10 @@ let msg =
 "Address: "+address+"%0A"+
 "Delivery Date: "+date+"%0A"+
 "Time: "+time;
+msg = encodeURIComponent(msg);
 
-window.open("https://wa.me/94778465161?text="+msg,"_blank");
-}
+window.location.href =
+"https://wa.me/94778465161?text=" + msg;
 </script>
 </script>
 
