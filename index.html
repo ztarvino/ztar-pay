@@ -88,6 +88,7 @@ margin-top:30px;
 </style>
 
 <script>
+<script>
 function orderProduct(product){
 
 let name = prompt("Enter Name");
@@ -105,11 +106,11 @@ if(!date) return;
 let time = prompt("Delivery Time");
 if(!time) return;
 
-let size=document.getElementById(product+"Size").value;
-let qty=document.getElementById(product+"Qty").value;
+let size = document.getElementById(product+"Size").value;
+let qty = document.getElementById(product+"Qty").value;
 
-let msg=
-"ZTAR PAY ORDER%0A"+
+let msg =
+"ZTAR PAY ORDER%0A%0A"+
 "Product: "+product+"%0A"+
 "Size: "+size+"%0A"+
 "Qty: "+qty+"%0A"+
@@ -119,8 +120,9 @@ let msg=
 "Delivery Date: "+date+"%0A"+
 "Time: "+time;
 
-window.open("https://wa.me/94778465161?text="+msg);
+window.open("https://wa.me/94778465161?text="+msg,"_blank");
 }
+</script>
 </script>
 
 </head>
