@@ -30,6 +30,12 @@ select,input{width:100%;padding:10px;margin-top:10px;border:1px solid var(--bord
 footer{background:black;color:white;text-align:center;padding:20px;margin-top:30px}
 .order-form{background:var(--card);padding:20px;margin:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
 .order-form h2{text-align:center}
+
+/* Delivery/Take Away Buttons - PUDHU MATTUM */
+.order-type-btn{flex:1; padding:12px; background:var(--card); color:var(--text); border:2px solid var(--border);
+border-radius:10px; font-weight:bold; cursor:pointer; font-size:15px; margin-top:10px;}
+.order-type-btn.active{background:#ff0000; color:#fff; border-color:#ff0000;}
+
 .cart-box{background:#e8f5e9;padding:15px;margin:20px;border-radius:12px;border:2px solid #00c853}
 .cart-box h3{margin:0 0 10px 0;color:#2e7d32}
 .cart-item{padding:10px;border-bottom:1px solid #ccc;font-size:14px;overflow:auto}
@@ -46,6 +52,7 @@ footer{background:black;color:white;text-align:center;padding:20px;margin-top:30
 let cart = [];
 let orderCount = localStorage.getItem('orderCount') || 0;
 let deliveryCharge = 50;
+let orderType = 'Delivery'; // PUDHU LINE
 let prices = {
   Mixture: {100:140, 200:280, 250:350, 500:700},
   Pakoda: {100:150, 200:300, 250:375, 500:750},
@@ -57,10 +64,27 @@ window.onload = function(){
   document.getElementById('custName').value = localStorage.getItem('custName') || '';
   document.getElementById('custPhone').value = localStorage.getItem('custPhone') || '';
   document.getElementById('custAddress').value = localStorage.getItem('custAddress') || '';
+  setOrderType('Delivery'); // PUDHU LINE
 }
 
 function toggleDark(){
   document.body.classList.toggle('dark');
+}
+
+// PUDHU FUNCTION MATTUM
+function setOrderType(type){
+  orderType = type;
+  document.getElementById('btn-delivery').classList.remove('active');
+  document.getElementById('btn-takeaway').classList.remove('active');
+
+  if(type == 'Delivery'){
+    document.getElementById('btn-delivery').classList.add('active');
+    document.getElementById('delivery-block').style.display = 'block';
+  } else {
+    document.getElementById('btn-takeaway').classList.add('active');
+    document.getElementById('delivery-block').style.display = 'none';
+  }
+  showCart();
 }
 
 function searchItems(){
@@ -139,7 +163,7 @@ function showCart(){
   });
 
   let discount = parseFloat(document.getElementById('discount').value) || 0;
-  let delivery = parseFloat(document.getElementById('delivery').value) || deliveryCharge;
+  let delivery = orderType == 'Delivery'? (parseFloat(document.getElementById('delivery').value) || deliveryCharge) : 0; // MAATHUNEN
   let grandTotal = subTotal - discount + delivery;
 
   cartDiv.innerHTML = html;
@@ -147,7 +171,7 @@ function showCart(){
   summaryDiv.innerHTML = `
     <div>Sub Total: Rs.${subTotal}</div>
     <div>Discount: - Rs.${discount}</div>
-    <div>Delivery: + Rs.${delivery}</div>
+    ${orderType == 'Delivery'? `<div>Delivery: + Rs.${delivery}</div>` : ''} <!-- PUDHU LINE -->
     <div class="total">Grand Total: Rs.${grandTotal}</div>
   `;
 }
@@ -164,8 +188,13 @@ function sendFullOrder(){
   localStorage.setItem('custPhone', phone);
   localStorage.setItem('custAddress', address);
 
-  if(!name ||!phone ||!address ||!date ||!time){
-    alert('Please fill the all details!');
+  if(!name ||!phone || (orderType=='Delivery' &&!address)){ // MAATHUNEN
+    alert('Name, Phone' + (orderType=='Delivery'? ', Address' : '') + ' must!');
+    return;
+  }
+
+  if(orderType=='Delivery' && (!date ||!time)){ // PUDHU CHECK
+    alert('Delivery ku Date & Time must!');
     return;
   }
 
@@ -184,7 +213,7 @@ function sendFullOrder(){
   }
 
   let discount = parseFloat(document.getElementById('discount').value) || 0;
-  let delivery = parseFloat(document.getElementById('delivery').value) || deliveryCharge;
+  let delivery = orderType == 'Delivery'? (parseFloat(document.getElementById('delivery').value) || deliveryCharge) : 0; // MAATHUNEN
   let grandTotal = subTotal - discount + delivery;
 
   orderCount = parseInt(orderCount) + 1;
@@ -193,14 +222,19 @@ function sendFullOrder(){
 
   let msg = `ZTAR PAY ORDER\n`;
   msg += `Order No: ${orderNo}\n`;
-  msg += `Name: ${name}\nPhone: ${phone}\nAddress: ${address}\nDelivery: ${date} ${time}\nPayment: ${payment}\n\n`;
+  msg += `Type: ${orderType}\n`; // PUDHU LINE
+  msg += `Name: ${name}\nPhone: ${phone}\n`;
+  if(orderType=='Delivery') msg += `Address: ${address}\nDelivery: ${date} ${time}\n`; // MAATHUNEN
+  msg += `Payment: ${payment}\n\n`;
   msg += `ORDER DETAILS:\n`;
 
   cart.forEach((item, index) => {
     msg += `${index+1}. ${item.product} - ${item.size} - Qty: ${item.qty} - Rs.${item.total}\n`;
   });
 
-  msg += `\nItems: ${itemCount}\nSub Total: Rs.${subTotal}\nDiscount: - Rs.${discount}\nDelivery: + Rs.${delivery}\nGRAND TOTAL: Rs.${grandTotal}`;
+  msg += `\nItems: ${itemCount}\nSub Total: Rs.${subTotal}\nDiscount: - Rs.${discount}\n`;
+  if(orderType=='Delivery') msg += `Delivery: + Rs.${delivery}\n`; // PUDHU LINE
+  msg += `GRAND TOTAL: Rs.${grandTotal}`;
 
   msg = encodeURIComponent(msg);
   window.open(`https://wa.me/94778465161?text=${msg}`, '_blank');
@@ -232,11 +266,22 @@ function sendFullOrder(){
 
 <div class="order-form">
 <h2>1. Please fill the Details</h2>
+
+<!-- PUDHU PART - Delivery/Take Away Buttons -->
+<div style="display:flex; gap:10px;">
+<button type="button" id="btn-delivery" class="order-type-btn active" onclick="setOrderType('Delivery')">Delivery</button>
+<button type="button" id="btn-takeaway" class="order-type-btn" onclick="setOrderType('Take Away')">Take Away</button>
+</div>
+
 <input type="text" id="custName" placeholder="Enter Name" required>
 <input type="tel" id="custPhone" placeholder="Enter Phone Number" required>
 <input type="text" id="custAddress" placeholder="Enter Address" required>
+
+<div id="delivery-block"> <!-- PUDHU DIV -->
 <input type="date" id="custDate" required>
 <input type="time" id="custTime" required>
+</div>
+
 <select id="payment">
 <option>Cash on Delivery</option>
 <option>Bank Transfer</option>
@@ -303,8 +348,6 @@ function sendFullOrder(){
 <div class="price" id="MurukkuPrice">Rs.120</div>
 <button class="btn-add" onclick="addToCart('Murukku', this)">+ Add to Cart</button>
 </div>
-
-
 
 </div>
 
