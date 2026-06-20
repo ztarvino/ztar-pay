@@ -46,7 +46,7 @@ border-radius:25px; font-size:18px; font-weight:bold; cursor:pointer; margin-top
 <body>
 
 <div class="hero">
-<img src="https://via.placeholder.com/140x140/000/fff?text=ZTAR+PAY" alt="ZTAR PAY">
+<img src="https://i.ibb.co/21KBz5f6/logo.png" alt="ZTAR PAY">
 <h1>ZTAR <span>PAY</span></h1>
 <h2>PAY SMART, LIVE SMART</h2>
 <h3>Fresh & Tasty Food</h3>
@@ -103,6 +103,13 @@ border-radius:25px; font-size:18px; font-weight:bold; cursor:pointer; margin-top
 <button onclick="sendWA()">Order via WhatsApp</button>
 </div>
 
+<script>
+let cart=[];
+function addCart(n,p){let i=cart.find(x=>x.name==n); i?i.qty++:cart.push({name:n,price:p,qty:1}); 
+document.getElementById('cart-count').innerText=cart.reduce((a,b)=>a+b.qty,0); alert(n+' added!')}
+
+function filterCat(c){
+document.querySelectorAll('.cat-btn').forEach(b=>b
 <script>
 let cart=[];
 function addCart(n,p){let i=cart.find(x=>x.name==n); i?i.qty++:cart.push({name:n,price:p,qty:1}); 
