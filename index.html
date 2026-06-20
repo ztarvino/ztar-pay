@@ -165,12 +165,12 @@ function sendFullOrder(){
   localStorage.setItem('custAddress', address);
 
   if(!name ||!phone ||!address ||!date ||!time){
-    alert('5 details um fill pannu machi!');
+    alert('Please fill the all details!');
     return;
   }
 
   if(cart.length == 0){
-    alert('Cart la item add pannu da!');
+    alert('Please add the item');
     return;
   }
 
@@ -179,7 +179,7 @@ function sendFullOrder(){
   cart.forEach(item => {subTotal += item.total; itemCount += item.qty});
 
   if(subTotal < 300){
-    alert('Min order Rs.300 da machi. Innum Rs.' + (300-subTotal) + ' ku add pannu');
+    alert('Min order Rs.300 da machi. Innum Rs.' + (300-subTotal) + ' Please add');
     return;
   }
 
@@ -231,7 +231,7 @@ function sendFullOrder(){
 </div>
 
 <div class="order-form">
-<h2>1. Your Details Fill Pannu</h2>
+<h2>1. Please fill the Details</h2>
 <input type="text" id="custName" placeholder="Enter Name" required>
 <input type="tel" id="custPhone" placeholder="Enter Phone Number" required>
 <input type="text" id="custAddress" placeholder="Enter Address" required>
@@ -244,7 +244,7 @@ function sendFullOrder(){
 </select>
 </div>
 
-<h1 style="text-align:center;">2. Items Select Pannu</h1>
+<h1 style="text-align:center;">2. Please select the item</h1>
 
 <div class="products">
 
