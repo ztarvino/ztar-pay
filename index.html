@@ -3,106 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jaffna Snacks - Fresh & Tasty</title>
+<title>Jaffna Snacks</title>
 <style>
-body {
-font-family: Arial, sans-serif;
-margin: 0;
-padding: 0;
-background: #f5f5f5;
-}
-.hero {
-background: #ff6b35;
-color: white;
-text-align: center;
-padding: 40px 20px;
-}
-.hero h1 {margin: 0; font-size: 32px;}
-.hero h2 {margin: 10px 0 0; font-size: 18px;}
+body{margin:0; padding:0; background:#0a0a0a; font-family:Arial; color:#fff;}
+.hero{background:linear-gradient(135deg, #000 0%, #cc0000 100%); color:white; text-align:center; padding:40px 20px; border-bottom:3px solid #ff0000;}
+.hero h1{margin:0; font-size:32px; font-style:italic; font-family:Georgia; text-shadow:0 2px 5px #000;}
+.hero h2{margin:10px 0 0; font-size:18px; font-style:italic; font-family:Georgia;}
 
-/* Category CSS */
-.category-tabs {
-display: flex;
-gap: 10px;
-justify-content: center;
-margin: 20px 0;
-flex-wrap: wrap;
-}
-.cat-btn {
-padding: 10px 20px;
-border: 2px solid #ff6b35;
-background: white;
-color: #ff6b35;
-border-radius: 25px;
-font-weight: bold;
-cursor: pointer;
-font-size: 15px;
-}
-.cat-btn.active, .cat-btn:hover {
-background: #ff6b35;
-color: white;
+/* Filter button - Black & Red */
+.cat-tabs{display:flex; gap:10px; justify-content:center; margin:25px 0; flex-wrap:wrap;}
+.cat-btn{padding:8px 18px; border:2px solid #ff0000; background:#1a1a1a; color:#ff0000; 
+border-radius:20px; font-weight:bold; cursor:pointer; font-style:italic; font-family:Georgia;}
+.cat-btn.active, .cat-btn:hover{background:#ff0000; color:#000; border-color:#ff0000;}
+
+/* Card - Black background Red border */
+.products{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; 
+padding:20px; max-width:1000px; margin:auto;}
+.card{background:#1a1a1a; border-radius:15px; padding:20px; text-align:center; 
+box-shadow:0 4px 15px rgba(255,0,0,0.2); border:1px solid #333;}
+.card img{width:100%; height:150px; object-fit:cover; border-radius:10px; border:2px solid #ff0000;}
+.card h3{margin:12px 0 5px; color:#fff; font-style:italic; font-family:Georgia;}
+.card p{margin:5px 0; color:#ff0000; font-weight:bold; font-size:18px; font-style:italic; font-family:Georgia;}
+.card button{background:#ff0000; color:#000; border:none; padding:10px 25px; border-radius:20px; 
+cursor:pointer; font-weight:bold; margin-top:12px; font-style:italic; font-family:Georgia;}
+.card button:hover{background:#cc0000; color:#fff;}
+
+/* Order Form - Black */
+.order-box{max-width:500px; margin:30px auto; padding:25px; background:#1a1a1a; border-radius:15px; 
+box-shadow:0 4px 15px rgba(255,0,0,0.2); border:1px solid #333;}
+.order-box h3{text-align:center; color:#ff0000; font-style:italic; font-family:Georgia;}
+.order-box input, .order-box textarea, .order-box select{width:100%; padding:12px; margin:8px 0; 
+border:1px solid #ff0000; border-radius:10px; box-sizing:border-box; font-size:15px; background:#0a0a0a; 
+color:#fff; font-style:italic; font-family:Georgia;}
+.order-box button{width:100%; padding:15px; background:#25D366; color:#000; border:none; 
+border-radius:20px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px; 
+font-style:italic; font-family:Georgia;}
+.order-box button:hover{background:#1da851;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>Fresh & Tasty Food</h1>
+<h2>Fast Delivery in Jaffna</h2>
+<div style="margin-top:10px; color:#ff0000; font-weight:bold;">Cart: <span id="cart-count">0</span> items</div>
+</div>
+
+<h2 style="text-align:center; margin-top:30px; color:#ff0000; font-style:italic; font-family:Georgia;">Select Category</h2>
+<div class="cat-tabs">
+<button class="cat-btn active" onclick="filterCat('all')">All Items</button>
+<button class="cat-btn" onclick="filterCat('snacks')">Snacks</button>
+<button class="cat-btn" onclick="filterCat('sweet')">Sweets</button>
+<button class="cat-btn" onclick="filterCat('cake')">Cakes</button>
+</div>
+
+<div class="products">
+<div class="card" data-cat="snacks">
+<img src="https://via.placeholder.com/200x150/000/ff0000?text=Mixture">
+<h3>Mixture</h3><p>Rs. 250</p>
+<button onclick="addCart('Mixture',250)">Add to Cart</button>
+</div>
+
+<div class="card" data-cat="sweet">
+<img src="https://via.placeholder.com/200x150/000/ff0000?text=Laddu">
+<h3>Laddu</h3><p>Rs. 300</p>
+<button onclick="addCart('Laddu',300)">Add to Cart</button>
+</div>
+
+<div class="card" data-cat="cake">
+<img src="https://via.placeholder.com/200x150/000/ff0000?text=Cake">
+<h3>Cake</h3><p>Rs. 800</p>
+<button onclick="addCart('Cake',800)">Add to Cart</button>
+</div>
+</div>
+
+<div class="order-box">
+<h3>Place Your Order</h3>
+<select id="otype" onchange="toggleAddr()">
+<option value="Delivery">Delivery</option>
+<option value="Take Away">Take Away</option>
+</select>
+<input type="text" id="name" placeholder="Your Name">
+<input type="tel" id="phone" placeholder="Phone Number">
+<div id="addr-block">
+<textarea id="addr" placeholder="Delivery Address" rows="3"></textarea>
+<input type="date" id="date"><input type="time" id="time">
+</div>
+<button onclick="sendWA()">Order via WhatsApp</button>
+</div>
+
+<script>
+let cart=[];
+function addCart(n,p){let i=cart.find(x=>x.name==n); i?i.qty++:cart.push({name:n,price:p,qty:1}); 
+document.getElementById('cart-count').innerText=cart.reduce((a,b)=>a+b.qty,0); alert(n+' added!')}
+
+function filterCat(c){
+document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+event.target.classList.add('active');
+document.querySelectorAll('.card').forEach(x=>x.style.display=(c=='all'||x.dataset.cat==c)?'block':'none');
 }
 
-/* Product Grid */
-.products {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 20px;
-padding: 20px;
-max-width: 1000px;
-margin: auto;
+function toggleAddr(){
+document.getElementById('addr-block').style.display=document.getElementById('otype').value=='Take Away'?'none':'block';
 }
-.card {
-background: white;
-border-radius: 12px;
-padding: 15px;
-text-align: center;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-.card img {
-width: 100%;
-height: 150px;
-object-fit: cover;
-border-radius: 8px;
-}
-.card h3 {margin: 10px 0 5px; color: #333;}
-.card p {margin: 5px 0; color: #ff6b35; font-weight: bold; font-size: 18px;}
-.card button {
-background: #ff6b35;
-color: white;
-border: none;
-padding: 10px 20px;
-border-radius: 8px;
-cursor: pointer;
-font-weight: bold;
-margin-top: 10px;
-}
-.card button:hover {background: #e55a2b;}
 
-/* Order Form */
-.order-form {
-max-width: 500px;
-margin: 30px auto;
-padding: 20px;
-background: white;
-border-radius: 12px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+function sendWA(){
+let n=document.getElementById('name').value, ph=document.getElementById('phone').value, 
+t=document.getElementById('otype').value, a=document.getElementById('addr').value,
+d=document.getElementById('date').value, tm=document.getElementById('time').value;
+if(!n||!ph||(t=='Delivery'&&(!a||!d||!tm))){alert('Fill all details!');return;}
+if(cart.length==0){alert('Cart empty!');return;}
+let no=Math.floor(Math.random()*10000), msg='Order #'+no+'\nType: '+t+'\nName: '+n+'\nPhone: '+ph;
+if(t=='Delivery')msg+='\nAddress: '+a+'\nDate: '+d+'\nTime: '+tm;
+msg+='\n\nItems: '+cart.map(x=>x.name+' x'+x.qty).join(', ');
+window.open('https://wa.me/94771234567?text='+encodeURIComponent(msg));
+alert('Order #'+no+' sent! ✅');
 }
-.order-form input, .order-form textarea, .order-form select {
-width: 100%;
-padding: 12px;
-margin: 8px 0;
-border: 1px solid #ddd;
-border-radius: 8px;
-box-sizing: border-box;
-font-size: 15px;
-}
-.order-form button {
-width: 100%;
-padding: 15px;
-background: #25D366;
-color: white;
-border: none;
+</script>
+</body>
+</html>border: none;
 border-radius: 8px;
 font-size: 18px;
 font-weight: bold;
