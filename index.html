@@ -3,133 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZTAR PAY - Fresh Snacks Jaffna</title>
+<title>ZTAR PAY</title>
+
 <style>
-body{margin:0; padding:0; background:#0a0a0a; font-family:Arial; color:#fff;}
-.hero{background:#000; color:white; text-align:center; padding:40px 20px; border-bottom:3px solid #ff0000;}
-.hero img{width:140px; height:auto; margin-bottom:15px; filter:drop-shadow(0 0 15px rgba(255,0,0,0.6));}
-.hero h1{margin:5px 0; font-size:36px; font-family:Georgia; font-style:italic;}
-.hero h1 span{color:#ff0000;}
-.hero h2{margin:5px 0 15px; font-size:16px; color:#ccc; letter-spacing:2px;}
-.hero h3{margin:20px 0 5px; font-size:24px; font-style:italic; font-family:Georgia;}
-.hero h4{margin:5px 0 10px; font-size:16px; color:#ccc; font-style:italic; font-family:Georgia;}
-
-/* Filter - Red theme */
-.cat-tabs{display:flex; gap:10px; justify-content:center; margin:25px 0; flex-wrap:wrap;}
-.cat-btn{padding:10px 20px; border:2px solid #ff0000; background:#1a1a1a; color:#ff0000; 
-border-radius:25px; font-weight:bold; cursor:pointer; font-size:15px; font-family:Georgia;}
-.cat-btn.active, .cat-btn:hover{background:#ff0000; color:#000;}
-
-/* Card - Black with Red glow */
-.products{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; 
-padding:20px; max-width:1000px; margin:auto;}
-.card{background:#1a1a1a; border-radius:15px; padding:20px; text-align:center; 
-box-shadow:0 0 20px rgba(255,0,0,0.15); border:1px solid #333;}
-.card img{width:100%; height:150px; object-fit:cover; border-radius:10px; border:2px solid #ff0000;}
-.card h3{margin:12px 0 5px; color:#fff; font-family:Georgia;}
-.card p{margin:5px 0; color:#ff0000; font-weight:bold; font-size:20px;}
-.card button{background:#ff0000; color:#000; border:none; padding:12px 30px; border-radius:25px; 
-cursor:pointer; font-weight:bold; margin-top:12px; font-size:15px;}
-.card button:hover{background:#cc0000; color:#fff;}
-
-/* Order Form */
-.order-box{max-width:500px; margin:30px auto; padding:25px; background:#1a1a1a; border-radius:15px; 
-box-shadow:0 0 20px rgba(255,0,0,0.15); border:1px solid #333;}
-.order-box h3{text-align:center; color:#ff0000; font-size:22px; font-family:Georgia;}
-.order-box input, .order-box textarea, .order-box select{width:100%; padding:12px; margin:8px 0; 
-border:1px solid #ff0000; border-radius:10px; box-sizing:border-box; font-size:15px; background:#0a0a0a; 
-color:#fff; font-family:Georgia;}
-.order-box button{width:100%; padding:15px; background:#25D366; color:#000; border:none; 
-border-radius:25px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px;}
+:root{--bg:#f5f5f5;--card:#fff;--text:#000;--border:#ccc}
+.dark{--bg:#1a1a1a;--card:#2d2d2d;--text:#fff;--border:#555}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);transition:0.3s}
+header{background:#000;color:white;text-align:center;padding:20px;position:relative}
+.logo{width:120px;border-radius:10px}
+.dark-toggle{position:absolute;right:20px;top:20px;background:#fff;color:#000;border:none;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:20px}
+.hero{text-align:center;padding:30px;background:var(--card)}
+.search-box{padding:20px;text-align:center}
+.search-box input{width:80%;max-width:400px;padding:12px;border:2px solid var(--border);border-radius:25px;font-size:16px;background:var(--card);color:var(--text)}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:20px}
+.card{background:var(--card);padding:15px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.15);text-align:center}
+.card img{width:100%;height:200px;object-fit:cover;border-radius:10px;cursor:pointer;transition:0.3s}
+.card img:hover{transform:scale(1.05)}
+select,input{width:100%;padding:10px;margin-top:10px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;background:var(--card);color:var(--text)}
+.price{font-size:28px;font-weight:bold;color:red;margin:15px 0}
+.btn-add{width:100%;padding:12px;background:#2196F3;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;margin-top:5px;transition:0.3s}
+.btn-add.added{background:#4CAF50}
+.btn-add:disabled{background:#999;cursor:not-allowed}
+.btn-order{width:100%;padding:15px;background:#00c853;color:white;border:none;border-radius:8px;font-size:20px;cursor:pointer;font-weight:bold;margin-top:20px}
+.btn-order:hover{background:#009624}
+.btn-delete{background:#f44336;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;float:right}
+footer{background:black;color:white;text-align:center;padding:20px;margin-top:30px}
+.order-form{background:var(--card);padding:20px;margin:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+.order-form h2{text-align:center}
+.cart-box{background:#e8f5e9;padding:15px;margin:20px;border-radius:12px;border:2px solid #00c853}
+.cart-box h3{margin:0 0 10px 0;color:#2e7d32}
+.cart-item{padding:10px;border-bottom:1px solid #ccc;font-size:14px;overflow:auto}
+.total{font-size:22px;font-weight:bold;color:red;text-align:right;margin-top:10px}
+.summary{font-size:16px;text-align:right;margin-top:10px}
+.summary div{margin:5px 0}
+.cart-info{background:#2196F3;color:white;padding:10px;border-radius:8px;text-align:center;font-weight:bold;margin-bottom:10px}
+.modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.8)}
+.modal img{margin:auto;display:block;max-width:90%;max-height:90%;margin-top:5%}
+.close{position:absolute;top:20px;right:35px;color:#fff;font-size:40px;font-weight:bold;cursor:pointer}
 </style>
+
+<script>
+let cart = [];
+let orderCount = localStorage.getItem('orderCount') || 0;
+let deliveryCharge = 50;
+let prices = {
+  Mixture: {100:140, 200:280, 250:350, 500:700},
+  Pakoda: {100:150, 200:300, 250:375, 500:750},
+  Kadalai: {100:110, 200:220, 250:275, 500:550},
+  Murukku: {100:120, 200:240, 250:300, 500:600}
+};
+
+window.onload = function(){
+  document.getElementById('custName').value = localStorage.getItem('custName') || '';
+  document.getElementById('custPhone').value = localStorage.getItem('custPhone') || '';
+  document.getElementById('custAddress').value = localStorage.getItem('custAddress') || '';
+}
+
+function toggleDark(){
+  document.body.classList.toggle('dark');
+}
+
+function searchItems(){
+  let filter = document.getElementById('search').value.toLowerCase();
+  let cards = document.getElementsByClassName('card');
+  for(let i=0; i<cards.length; i++){
+    let txt = cards[i].innerText.toLowerCase();
+    cards[i].style.display = txt.includes(filter)? '' : 'none';
+  }
+}
+
+function openModal(src){
+  document.getElementById('imgModal').style.display = 'block';
+  document.getElementById('modalImg').src = src;
+}
+function closeModal(){
+  document.getElementById('imgModal').style.display = 'none';
+}
+
+function updatePrice(product){
+  let size = document.getElementById(product+"Size").value;
+  let grams = parseInt(size.split('g')[0]);
+  let price = prices[product][grams];
+  document.getElementById(product+"Price").innerText = 'Rs.' + price;
+}
+
+function addToCart(product, btn){
+  let size = document.getElementById(product+"Size").value;
+  let grams = parseInt(size.split('g')[0]);
+  let qty = parseInt(document.getElementById(product+"Qty").value);
+  let price = prices[product][grams];
+  let total = price * qty;
+
+  if(qty < 1){
+    alert('Qty 1 ku mela podu machi');
+    return;
+  }
+
+  cart.push({product: product, size: size, grams: grams, qty: qty, price: price, total: total});
+
+  btn.innerText = 'Added ✓';
+  btn.classList.add('added');
+  setTimeout(()=>{btn.innerText = '+ Add to Cart'; btn.classList.remove('added')}, 1500);
+
+  showCart();
+}
+
+function removeFromCart(index){
+  cart.splice(index, 1);
+  showCart();
+}
+
+function showCart(){
+  let cartDiv = document.getElementById('cartItems');
+  let summaryDiv = document.getElementById('cartSummary');
+  let infoDiv = document.getElementById('cartInfo');
+
+  if(cart.length == 0){
+    cartDiv.innerHTML = '<p style="color:gray">Cart empty</p>';
+    summaryDiv.innerHTML = '';
+    infoDiv.innerHTML = '';
+    return;
+  }
+
+  let html = '';
+  let subTotal = 0;
+  let itemCount = 0;
+
+  cart.forEach((item, index) => {
+    subTotal += item.total;
+    itemCount += item.qty;
+    html += `<div class="cart-item">
+      ${index+1}. ${item.product} - ${item.size} - Qty: ${item.qty} - Rs.${item.total}
+      <button class="btn-delete" onclick="removeFromCart(${index})">X</button>
+    </div>`;
+  });
+
+  let discount = parseFloat(document.getElementById('discount').value) || 0;
+  let delivery = parseFloat(document.getElementById('delivery').value) || deliveryCharge;
+  let grandTotal = subTotal - discount + delivery;
+
+  cartDiv.innerHTML = html;
+  infoDiv.innerHTML = `Items: ${itemCount} | Sub Total: Rs.${subTotal}`;
+  summaryDiv.innerHTML = `
+    <div>Sub Total: Rs.${subTotal}</div>
+    <div>Discount: - Rs.${discount}</div>
+    <div>Delivery: + Rs.${delivery}</div>
+    <div class="total">Grand Total: Rs.${grandTotal}</div>
+  `;
+}
+
+function sendFullOrder(){
+  let name = document.getElementById('custName').value;
+  let phone = document.getElementById('custPhone').value;
+  let address = document.getElementById('custAddress').value;
+  let date = document.getElementById('custDate').value;
+  let time = document.getElementById('custTime').value;
+  let payment = document.getElementById('payment').value;
+
+  localStorage.setItem('custName', name);
+  localStorage.setItem('custPhone', phone);
+  localStorage.setItem('custAddress', address);
+
+  if(!name ||!phone ||!address ||!date ||!time){
+    alert('5 details um fill pannu machi!');
+    return;
+  }
+
+  if(cart.length == 0){
+    alert('Cart la item add pannu da!');
+    return;
+  }
+
+  let subTotal = 0;
+  let itemCount = 0;
+  cart.forEach(item => {subTotal += item.total; itemCount += item.qty});
+
+  if(subTotal < 300){
+    alert('Min order Rs.300 da machi. Innum Rs.' + (300-subTotal) + ' ku add pannu');
+    return;
+  }
+
+  let discount = parseFloat(document.getElementById('discount').value) || 0;
+  let delivery = parseFloat(document.getElementById('delivery').value) || deliveryCharge;
+  let grandTotal = subTotal - discount + delivery;
+
+  orderCount = parseInt(orderCount) + 1;
+  localStorage.setItem('orderCount', orderCount);
+  let orderNo = '#ZT' + String(orderCount).padStart(3, '0');
+
+  let msg = `ZTAR PAY ORDER\n`;
+  msg += `Order No: ${orderNo}\n`;
+  msg += `Name: ${name}\nPhone: ${phone}\nAddress: ${address}\nDelivery: ${date} ${time}\nPayment: ${payment}\n\n`;
+  msg += `ORDER DETAILS:\n`;
+
+  cart.forEach((item, index) => {
+    msg += `${index+1}. ${item.product} - ${item.size} - Qty: ${item.qty} - Rs.${item.total}\n`;
+  });
+
+  msg += `\nItems: ${itemCount}\nSub Total: Rs.${subTotal}\nDiscount: - Rs.${discount}\nDelivery: + Rs.${delivery}\nGRAND TOTAL: Rs.${grandTotal}`;
+
+  msg = encodeURIComponent(msg);
+  window.open(`https://wa.me/94778465161?text=${msg}`, '_blank');
+
+  cart = [];
+  showCart();
+  alert('Order #' + orderNo + ' WhatsApp ku anupi vitachu! ✅');
+}
+</script>
+
 </head>
 <body>
 
+<header>
+<button class="dark-toggle" onclick="toggleDark()">🌙</button>
+<img src="logo.png" class="logo" alt="ZTAR PAY Logo">
+<h1>ZTAR PAY</h1>
+<h2>Pay Smart, Live Smart</h2>
+</header>
+
 <div class="hero">
-<img src="https://i.ibb.co/21KBz5f6/logo.png" alt="ZTAR PAY">
-<h1>ZTAR <span>PAY</span></h1>
-<h2>PAY SMART, LIVE SMART</h2>
-<h3>Fresh & Tasty Food</h3>
-<h4>Fast Delivery in Jaffna</h4>
-<div style="margin-top:15px; color:#ff0000; font-weight:bold; font-size:16px;">Cart: <span id="cart-count">0</span> items</div>
+<h1>Fresh & Tasty Snacks</h1>
+<h2>Fast Delivery in Jaffna</h2>
 </div>
 
-<h2 style="text-align:center; margin-top:30px; color:#ff0000; font-size:24px; font-family:Georgia;">Select Category</h2>
-<div class="cat-tabs">
-<button class="cat-btn active" onclick="filterCat('all')">All Items</button>
-<button class="cat-btn" onclick="filterCat('snacks')">Snacks</button>
-<button class="cat-btn" onclick="filterCat('sweet')">Sweets</button>
-<button class="cat-btn" onclick="filterCat('cake')">Cakes</button>
+<div class="search-box">
+<input type="text" id="search" placeholder="🔍 Search items..." onkeyup="searchItems()">
 </div>
+
+<div class="order-form">
+<h2>1. Your Details Fill Pannu</h2>
+<input type="text" id="custName" placeholder="Enter Name" required>
+<input type="tel" id="custPhone" placeholder="Enter Phone Number" required>
+<input type="text" id="custAddress" placeholder="Enter Address" required>
+<input type="date" id="custDate" required>
+<input type="time" id="custTime" required>
+<select id="payment">
+<option>Cash on Delivery</option>
+<option>Bank Transfer</option>
+<option>Card Payment</option>
+</select>
+</div>
+
+<h1 style="text-align:center;">2. Items Select Pannu</h1>
 
 <div class="products">
-<div class="card" data-cat="snacks">
-<img src="https://via.placeholder.com/200x150/000/ff0000?text=Mixture">
-<h3>Mixture</h3><p>Rs. 250</p>
-<button onclick="addCart('Mixture',250)">Add to Cart</button>
-</div>
 
-<div class="card" data-cat="snacks">
-<img src="https://via.placeholder.com/200x150/000/ff0000?text=Pakoda">
-<h3>Pakoda</h3><p>Rs. 200</p>
-<button onclick="addCart('Pakoda',200)">Add to Cart</button>
-</div>
-
-<div class="card" data-cat="sweet">
-<img src="https://via.placeholder.com/200x150/000/ff0000?text=Laddu">
-<h3>Laddu</h3><p>Rs. 300</p>
-<button onclick="addCart('Laddu',300)">Add to Cart</button>
-</div>
-
-<div class="card" data-cat="cake">
-<img src="https://via.placeholder.com/200x150/000/ff0000?text=Cake">
-<h3>Cake</h3><p>Rs. 800</p>
-<button onclick="addCart('Cake',800)">Add to Cart</button>
-</div>
-</div>
-
-<div class="order-box">
-<h3>Place Your Order</h3>
-<select id="otype" onchange="toggleAddr()">
-<option value="Delivery">Delivery</option>
-<option value="Take Away">Take Away</option>
+<div class="card">
+<img src="mixture.jpg" alt="Mixture" onclick="openModal(this.src)">
+<h2>Mixture</h2>
+<select id="MixtureSize" onchange="updatePrice('Mixture')">
+<option value="100g - Rs140">100g - Rs140</option>
+<option value="200g - Rs280">200g - Rs280</option>
+<option value="250g - Rs350">250g - Rs350</option>
+<option value="500g - Rs700">500g - Rs700</option>
 </select>
-<input type="text" id="name" placeholder="Your Name">
-<input type="tel" id="phone" placeholder="Phone Number">
-<div id="addr-block">
-<textarea id="addr" placeholder="Delivery Address" rows="3"></textarea>
-<input type="date" id="date"><input type="time" id="time">
-</div>
-<button onclick="sendWA()">Order via WhatsApp</button>
+<input type="number" id="MixtureQty" value="1" min="1">
+<div class="price" id="MixturePrice">Rs.140</div>
+<button class="btn-add" onclick="addToCart('Mixture', this)">+ Add to Cart</button>
 </div>
 
-<script>
-let cart=[];
-function addCart(n,p){let i=cart.find(x=>x.name==n); i?i.qty++:cart.push({name:n,price:p,qty:1}); 
-document.getElementById('cart-count').innerText=cart.reduce((a,b)=>a+b.qty,0); alert(n+' added!')}
+<div class="card">
+<img src="pakoda.jpg" alt="Pakoda" onclick="openModal(this.src)">
+<h2>Pakoda</h2>
+<select id="PakodaSize" onchange="updatePrice('Pakoda')">
+<option value="100g - Rs150">100g - Rs150</option>
+<option value="200g - Rs300">200g - Rs300</option>
+<option value="250g - Rs375">250g - Rs375</option>
+<option value="500g - Rs750">500g - Rs750</option>
+</select>
+<input type="number" id="PakodaQty" value="1" min="1">
+<div class="price" id="PakodaPrice">Rs.150</div>
+<button class="btn-add" onclick="addToCart('Pakoda', this)">+ Add to Cart</button>
+</div>
 
-function filterCat(c){
-document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-event.target.classList.add('active');
-document.querySelectorAll('.card').forEach(x=>x.style.display=(c=='all'||x.dataset.cat==c)?'block':'none');
-}
+<div class="card">
+<img src="kadalai.jpg" alt="Kadalai" onclick="openModal(this.src)">
+<h2>Kadalai</h2>
+<select id="KadalaiSize" onchange="updatePrice('Kadalai')">
+<option value="100g - Rs110">100g - Rs110</option>
+<option value="200g - Rs220">200g - Rs220</option>
+<option value="250g - Rs275">250g - Rs275</option>
+<option value="500g - Rs550">500g - Rs550</option>
+</select>
+<input type="number" id="KadalaiQty" value="1" min="1">
+<div class="price" id="KadalaiPrice">Rs.110</div>
+<button class="btn-add" onclick="addToCart('Kadalai', this)">+ Add to Cart</button>
+</div>
 
-function toggleAddr(){
-document.getElementById('addr-block').style.display=document.getElementById('otype').value=='Take Away'?'none':'block';
-}
+<div class="card">
+<img src="murukku.jpg" alt="Murukku" onclick="openModal(this.src)">
+<h2>Murukku</h2>
+<select id="MurukkuSize" onchange="updatePrice('Murukku')">
+<option value="100g - Rs120">100g - Rs120</option>
+<option value="200g - Rs240">200g - Rs240</option>
+<option value="250g - Rs300">250g - Rs300</option>
+<option value="500g - Rs600">500g - Rs600</option>
+</select>
+<input type="number" id="MurukkuQty" value="1" min="1">
+<div class="price" id="MurukkuPrice">Rs.120</div>
+<button class="btn-add" onclick="addToCart('Murukku', this)">+ Add to Cart</button>
+</div>
 
-function sendWA(){
-let n=document.getElementById('name').value, ph=document.getElementById('phone').value, 
-t=document.getElementById('otype').value, a=document.getElementById('addr').value,
-d=document.getElementById('date').value, tm=document.getElementById('time').value;
-if(!n||!ph||(t=='Delivery'&&(!a||!d||!tm))){alert('Fill all details!');return;}
-if(cart.length==0){alert('Cart empty!');return;}
-let no=Math.floor(Math.random()*10000), msg='Order #'+no+'\nType: '+t+'\nName: '+n+'\nPhone: '+ph;
-if(t=='Delivery')msg+='\nAddress: '+a+'\nDate: '+d+'\nTime: '+tm;
-msg+='\n\nItems: '+cart.map(x=>x.name+' x'+x.qty).join(', ');
-window.open('https://wa.me/94771234567?text='+encodeURIComponent(msg));
-alert('Order #'+no+' sent! ✅');
-}
-</script>
+
+
+</div>
+
+<div class="cart-box">
+<h3>🛒 Your Cart</h3>
+<div class="cart-info" id="cartInfo"></div>
+<div id="cartItems"><p style="color:gray">Cart empty</p></div>
+
+<h3 style="margin-top:20px">3. Discount & Delivery</h3>
+<input type="number" id="discount" placeholder="Discount Rs - e.g: 50" value="0" min="0" oninput="showCart()">
+<input type="number" id="delivery" placeholder="Delivery Charge Rs" value="50" min="0" oninput="showCart()">
+
+<div id="cartSummary"></div>
+<button class="btn-order" onclick="sendFullOrder()">4. Order All via WhatsApp</button>
+</div>
+
+<footer>
+<h3>ZTAR PAY</h3>
+<p>WhatsApp: 0778465161</p>
+<p>Jaffna, Sri Lanka</p>
+</footer>
+
+<div id="imgModal" class="modal" onclick="closeModal()">
+<span class="close">&times;</span>
+<img class="modal-content" id="modalImg">
+</div>
+
 </body>
 </html>
