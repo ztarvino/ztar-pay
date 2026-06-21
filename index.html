@@ -8,14 +8,14 @@
 <style>
 :root{--bg:#f5f5f5;--card:#fff;--text:#000;--border:#ccc}
 .dark{--bg:#1a1a1a;--card:#2d2d2d;--text:#fff;--border:#555}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);transition:0.3s}
-header{background:#000;color:white;text-align:center;padding:20px;position:relative}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);transition:0.3s;position:relative;min-height:100vh}
+header{background:#000;color:white;text-align:center;padding:20px;position:relative;z-index:1}
 .logo{width:120px;border-radius:10px}
 .dark-toggle{position:absolute;right:20px;top:20px;background:#fff;color:#000;border:none;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:20px}
 .hero{text-align:center;padding:30px;background:var(--card)}
 .search-box{padding:20px;text-align:center}
 .search-box input{width:80%;max-width:400px;padding:12px;border:2px solid var(--border);border-radius:25px;font-size:16px;background:var(--card);color:var(--text)}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:20px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:20px;position:relative;z-index:1}
 .card{background:var(--card);padding:15px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.15);text-align:center}
 .card img{width:100%;height:200px;object-fit:cover;border-radius:10px;cursor:pointer;transition:0.3s}
 .card img:hover{transform:scale(1.05)}
@@ -26,12 +26,12 @@ select,input{width:100%;padding:10px;margin-top:10px;border:1px solid var(--bord
 .btn-order{width:100%;padding:15px;background:#00c853;color:white;border:none;border-radius:8px;font-size:20px;cursor:pointer;font-weight:bold;margin-top:20px}
 .btn-order:hover{background:#009624}
 .btn-delete{background:#f44336;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;float:right}
-footer{background:black;color:white;text-align:center;padding:20px;margin-top:30px}
-.order-form{background:var(--card);padding:20px;margin:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.15)}
+footer{background:black;color:white;text-align:center;padding:20px;margin-top:30px;position:relative;z-index:1}
+.order-form{background:var(--card);padding:20px;margin:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.15);position:relative;z-index:1}
 .order-form h2{text-align:center}
 
 /* Category Buttons */
-.cat-tabs{display:flex; gap:10px; justify-content:center; margin:25px 0; flex-wrap:wrap;}
+.cat-tabs{display:flex; gap:10px; justify-content:center; margin:25px 0; flex-wrap:wrap;position:relative;z-index:1}
 .cat-btn{padding:10px 20px; border:2px solid var(--border); background:var(--card); color:var(--text);
 border-radius:25px; font-weight:bold; cursor:pointer; font-size:15px;}
 .cat-btn.active,.cat-btn:hover{background:#ff0000; color:#fff; border-color:#ff0000;}
@@ -41,7 +41,7 @@ border-radius:25px; font-weight:bold; cursor:pointer; font-size:15px;}
 border-radius:10px; font-weight:bold; cursor:pointer; font-size:15px; margin-top:10px;}
 .order-type-btn.active{background:#ff0000; color:#fff; border-color:#ff0000;}
 
-.cart-box{background:#e8f5e9;padding:15px;margin:20px;border-radius:12px;border:2px solid #00c853}
+.cart-box{background:#e8f5e9;padding:15px;margin:20px;border-radius:12px;border:2px solid #00c853;position:relative;z-index:1}
 .cart-box h3{margin:0 0 10px 0;color:#2e7d32}
 .cart-item{padding:10px;border-bottom:1px solid #ccc;font-size:14px;overflow:auto}
 .total{font-size:22px;font-weight:bold;color:red;text-align:right;margin-top:10px}
@@ -51,6 +51,31 @@ border-radius:10px; font-weight:bold; cursor:pointer; font-size:15px; margin-top
 .modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.8)}
 .modal img{margin:auto;display:block;max-width:90%;max-height:90%;margin-top:5%}
 .close{position:absolute;top:20px;right:35px;color:#fff;font-size:40px;font-weight:bold;cursor:pointer}
+
+/* WEBSITE PAGE WATERMARK - HEADER LOGO MAARATHU */
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  width: 500px;
+  height: 500px;
+  background-image: url('logo.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  body::before {
+    width: 300px;
+    height: 300px;
+    opacity: 0.10;
+  }
+}
 </style>
 
 <script>
@@ -272,7 +297,7 @@ function sendFullOrder(){
 <img src="logo.png" class="logo" alt="ZTAR PAY Logo">
 <h1>ZTAR PAY</h1>
 <h2>Fresh & Tasty Foods</h2>
-<h3>Fast Delivery @ Anytime Anywhere</h2>
+<h3>Fast Delivery @ Anytime Anywhere</h3>
 </header>
 
 <h2 style="text-align:center; margin-top:30px;">Select Category</h2>
