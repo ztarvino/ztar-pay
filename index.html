@@ -12,9 +12,6 @@ body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text
 header{background:#000;color:white;text-align:center;padding:20px;position:relative;z-index:1}
 .logo{width:120px;border-radius:10px}
 .dark-toggle{position:absolute;right:20px;top:20px;background:#fff;color:#000;border:none;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:20px}
-.hero{text-align:center;padding:30px;background:var(--card)}
-.search-box{padding:20px;text-align:center}
-.search-box input{width:80%;max-width:400px;padding:12px;border:2px solid var(--border);border-radius:25px;font-size:16px;background:var(--card);color:var(--text)}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:20px;position:relative;z-index:1}
 .card{background:var(--card);padding:15px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.15);text-align:center}
 .card img{width:100%;height:200px;object-fit:cover;border-radius:10px;cursor:pointer;transition:0.3s}
@@ -25,6 +22,8 @@ select,input{width:100%;padding:10px;margin-top:10px;border:1px solid var(--bord
 .btn-add.added{background:#4CAF50}
 .btn-order{width:100%;padding:15px;background:#00c853;color:white;border:none;border-radius:8px;font-size:20px;cursor:pointer;font-weight:bold;margin-top:20px}
 .btn-order:hover{background:#009624}
+.btn-cancel{width:100%;padding:12px;background:#f44336;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;margin-top:10px}
+.btn-cancel:hover{background:#d32f2f}
 .btn-delete{background:#f44336;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;float:right}
 footer{background:black;color:white;text-align:center;padding:20px;margin-top:30px;position:relative;z-index:1}
 .order-form{background:var(--card);padding:20px;margin:20px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.15);position:relative;z-index:1}
@@ -287,6 +286,27 @@ function sendFullOrder(){
   showCart();
   alert('Order #' + orderNo + ' Sent to the WhatsApp! ✅');
 }
+
+function cancelOrder(){
+  if(cart.length == 0){
+    alert('Cart already empty machi');
+    return;
+  }
+
+  if(confirm('Order ah cancel panna poriya? Cart full ah clear aagidum.')){
+    cart = [];
+    showCart();
+    localStorage.removeItem('custName');
+    localStorage.removeItem('custPhone');
+    localStorage.removeItem('custAddress');
+    document.getElementById('custName').value = '';
+    document.getElementById('custPhone').value = '';
+    document.getElementById('custAddress').value = '';
+    document.getElementById('discount').value = '0';
+    document.getElementById('delivery').value = '50';
+    alert('Order Cancelled! Cart clear aagiduchu ✅');
+  }
+}
 </script>
 
 </head>
@@ -450,6 +470,7 @@ function sendFullOrder(){
 
 <div id="cartSummary"></div>
 <button class="btn-order" onclick="sendFullOrder()">4. Order All via WhatsApp</button>
+<button class="btn-cancel" onclick="cancelOrder()">❌ Cancel Order</button>
 </div>
 
 <footer>
