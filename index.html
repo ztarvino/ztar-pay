@@ -22,6 +22,8 @@ select,input{width:100%;padding:10px;margin-top:10px;border:1px solid var(--bord
 .btn-add.added{background:#4CAF50}
 .btn-order{width:100%;padding:15px;background:#00c853;color:white;border:none;border-radius:8px;font-size:20px;cursor:pointer;font-weight:bold;margin-top:20px}
 .btn-order:hover{background:#009624}
+.btn-print{width:100%;padding:12px;background:#FF9800;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;margin-top:10px}
+.btn-print:hover{background:#F57C00}
 .btn-cancel{width:100%;padding:12px;background:#f44336;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;margin-top:10px}
 .btn-cancel:hover{background:#d32f2f}
 .btn-delete{background:#f44336;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;float:right}
@@ -75,6 +77,13 @@ body::before {
     opacity: 0.10;
   }
 }
+
+/* PRINT BILL STYLE */
+@media print {
+  body * {visibility:hidden}
+  #billArea, #billArea * {visibility:visible}
+  #billArea {position:absolute; left:0; top:0; width:100%}
+}
 </style>
 
 <script>
@@ -82,6 +91,7 @@ let cart = [];
 let orderCount = localStorage.getItem('orderCount') || 0;
 let deliveryCharge = 50;
 let orderType = 'Delivery';
+let lastOrder = {};
 let prices = {
   Mixture: {100:140, 200:280, 250:350, 500:700},
   Pakoda: {100:150, 200:300, 250:375, 500:750},
@@ -263,8 +273,12 @@ function sendFullOrder(){
   localStorage.setItem('orderCount', orderCount);
   let orderNo = '#ZT' + String(orderCount).padStart(3, '0');
 
-  let msg = `ZTAR PAY ORDER\n`;
-  msg += `Order No: ${orderNo}\n`;
+  // Save for print bill
+  lastOrder = {orderNo, name, phone, address, date, time, payment, cart: [...cart], subTotal, discount, delivery, grandTotal, itemCount, orderType};
+
+  // 1. ORDER NO HIGHLIGHT + FIRE EMOJI + BOLD
+  let msg = `🔥 ZTAR PAY ORDER 🔥\n`;
+  msg += `*Order No: ${orderNo}*\n`;
   msg += `Type: ${orderType}\n`;
   msg += `Name: ${name}\nPhone: ${phone}\n`;
   if(orderType=='Delivery') msg += `Address: ${address}\nDelivery: ${date} ${time}\n`;
@@ -277,14 +291,23 @@ function sendFullOrder(){
 
   msg += `\nItems: ${itemCount}\nSub Total: Rs.${subTotal}\nDiscount: - Rs.${discount}\n`;
   if(orderType=='Delivery') msg += `Delivery: + Rs.${delivery}\n`;
-  msg += `GRAND TOTAL: Rs.${grandTotal}`;
+  msg += `*GRAND TOTAL: Rs.${grandTotal}*`;
 
   msg = encodeURIComponent(msg);
   window.open(`https://wa.me/94778465161?text=${msg}`, '_blank');
 
+  // 2. AUTO REPLY TO CUSTOMER
+  let cleanPhone = phone.replace(/\D/g,'');
+  if(cleanPhone.length >= 9){
+    // 077 format ah 9477 ah maathu
+    if(cleanPhone.startsWith('0')) cleanPhone = '94' + cleanPhone.substring(1);
+    let autoMsg = encodeURIComponent(`Hi ${name}! ✅\nThank you for ordering from ZTAR PAY!\n*Order No: ${orderNo}*\nYour order has been received successfully.\nWe will contact you soon.\n\n- ZTAR PAY Team`);
+    setTimeout(()=>{window.open(`https://wa.me/${cleanPhone}?text=${autoMsg}`, '_blank')}, 2000);
+  }
+
   cart = [];
   showCart();
-  alert('Order #' + orderNo + ' Sent to the WhatsApp! ✅');
+  alert('Order #' + orderNo + ' Sent to WhatsApp! ✅\nAuto reply sent to customer');
 }
 
 function cancelOrder(){
@@ -306,6 +329,48 @@ function cancelOrder(){
     document.getElementById('delivery').value = '50';
     alert('Order Cancelled! Cart clear aagiduchu ✅');
   }
+}
+
+// 3. PRINT BILL FUNCTION
+function printBill(){
+  if(!lastOrder.orderNo){
+    alert('First order pottu aprom print pannu machi');
+    return;
+  }
+
+  let bill = `<div id="billArea" style="font-family:Arial;padding:20px;max-width:300px;margin:auto;border:2px dashed #000">
+  <h2 style="text-align:center;margin:0">ZTAR PAY</h2>
+  <p style="text-align:center;margin:5px 0">Fresh & Tasty Foods</p>
+  <p style="text-align:center;margin:5px 0">0778465161</p>
+  <hr>
+  <p><b>Order No:</b> ${lastOrder.orderNo}</p>
+  <p><b>Type:</b> ${lastOrder.orderType}</p>
+  <p><b>Name:</b> ${lastOrder.name}</p>
+  <p><b>Phone:</b> ${lastOrder.phone}</p>
+  ${lastOrder.orderType=='Delivery'? `<p><b>Address:</b> ${lastOrder.address}</p>` : ''}
+  <hr>
+  <table style="width:100%;font-size:13px">
+  <tr><th align="left">Item</th><th>Qty</th><th align="right">Total</th></tr>`;
+
+  lastOrder.cart.forEach(item => {
+    bill += `<tr><td>${item.product} ${item.size}</td><td align="center">${item.qty}</td><td align="right">Rs.${item.total}</td></tr>`;
+  });
+
+  bill += `</table><hr>
+  <p style="text-align:right">Sub Total: Rs.${lastOrder.subTotal}</p>
+  <p style="text-align:right">Discount: -Rs.${lastOrder.discount}</p>
+  ${lastOrder.orderType=='Delivery'? `<p style="text-align:right">Delivery: +Rs.${lastOrder.delivery}</p>` : ''}
+  <p style="text-align:right;font-size:18px"><b>Grand Total: Rs.${lastOrder.grandTotal}</b></p>
+  <hr>
+  <p style="text-align:center;font-size:12px">Thank You! Visit Again</p>
+  </div>`;
+
+  let win = window.open('', '', 'height=600,width=400');
+  win.document.write('<html><head><title>Print Bill</title></head><body>');
+  win.document.write(bill);
+  win.document.write('</body></html>');
+  win.document.close();
+  win.print();
 }
 </script>
 
@@ -470,6 +535,7 @@ function cancelOrder(){
 
 <div id="cartSummary"></div>
 <button class="btn-order" onclick="sendFullOrder()">4. Order All via WhatsApp</button>
+<button class="btn-print" onclick="printBill()">🖨️ Print Bill</button>
 <button class="btn-cancel" onclick="cancelOrder()">❌ Cancel Order</button>
 </div>
 
