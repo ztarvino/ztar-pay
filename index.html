@@ -107,7 +107,9 @@ let prices = {
   Murukku: {100:120, 200:240, 250:300, 500:600},
   Laddu: {100:160, 200:320, 250:400, 500:800},
   'Sweet items': {100:180, 200:360, 250:450, 500:900},
-  Cake: {500:800, 1000:1500}
+  Cake: {500:800, 1000:1500},
+  Role: {100:200, 200:400, 250:500, 500:1000},
+  Soda: {250:80, 500:150, 1000:280}
 };
 
 window.onload = function(){
@@ -142,7 +144,7 @@ function filterCat(c){
   document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
   event.target.classList.add('active');
 
-  let title = c=='all'?'All Items': c=='snacks'?'Snacks': c=='sweet'?'Sweets':'Cakes';
+  let title = c=='all'?'All Items': c=='snacks'?'Snacks': c=='sweet'?'Sweets': c=='cake'?'Cakes': c=='role'?'Role': 'Soda';
   document.getElementById('catTitle').innerText = title;
 
   document.querySelectorAll('.card').forEach(x=>x.style.display=(c=='all'||x.dataset.cat==c)?'block':'none');
@@ -459,6 +461,9 @@ function closeHistory(){
 <button class="cat-btn" onclick="filterCat('snacks')">Snacks</button>
 <button class="cat-btn" onclick="filterCat('sweet')">Sweets</button>
 <button class="cat-btn" onclick="filterCat('cake')">Cakes</button>
+<!-- NEW: 2 CATEGORY BUTTONS ADDED -->
+<button class="cat-btn" onclick="filterCat('role')">Role</button>
+<button class="cat-btn" onclick="filterCat('soda')">Soda</button>
 </div>
 
 <h2 id="catTitle" style="text-align:center; margin:20px 0; color:#ff0000; font-size:24px; font-family:Georgia;">All Items</h2>
@@ -591,6 +596,35 @@ function closeHistory(){
 <input type="number" id="CakeQty" value="1" min="1">
 <div class="price" id="CakePrice">Rs.800</div>
 <button class="btn-add" onclick="addToCart('Cake', this)">+ Add to Cart</button>
+</div>
+
+<!-- NEW: ROLE CATEGORY -->
+<div class="card" data-cat="role">
+<img src="role.jpg" alt="Role" onclick="openModal(this.src)">
+<h2>Role</h2>
+<select id="RoleSize" onchange="updatePrice('Role')">
+<option value="100g - Rs200">100g - Rs200</option>
+<option value="200g - Rs400">200g - Rs400</option>
+<option value="250g - Rs500">250g - Rs500</option>
+<option value="500g - Rs1000">500g - Rs1000</option>
+</select>
+<input type="number" id="RoleQty" value="1" min="1">
+<div class="price" id="RolePrice">Rs.200</div>
+<button class="btn-add" onclick="addToCart('Role', this)">+ Add to Cart</button>
+</div>
+
+<!-- NEW: SODA CATEGORY -->
+<div class="card" data-cat="soda">
+<img src="soda.jpg" alt="Soda" onclick="openModal(this.src)">
+<h2>Soda</h2>
+<select id="SodaSize" onchange="updatePrice('Soda')">
+<option value="250ml - Rs80">250ml - Rs80</option>
+<option value="500ml - Rs150">500ml - Rs150</option>
+<option value="1000ml - Rs280">1L - Rs280</option>
+</select>
+<input type="number" id="SodaQty" value="1" min="1">
+<div class="price" id="SodaPrice">Rs.80</div>
+<button class="btn-add" onclick="addToCart('Soda', this)">+ Add to Cart</button>
 </div>
 
 </div>
