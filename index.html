@@ -172,7 +172,7 @@ function addToCart(product, btn){
   let total = price * qty;
 
   if(qty < 1){
-    alert('Qty 1 ku mela podu machi');
+    alert('Min Qty 1');
     return;
   }
 
@@ -261,7 +261,7 @@ function sendFullOrder(){
   cart.forEach(item => {subTotal += item.total; itemCount += item.qty});
 
   if(subTotal < 300){
-    alert('Min order Rs.300 da machi. Innum Rs.' + (300-subTotal) + ' Please add');
+    alert('Min order Rs.300 more Rs.' + (300-subTotal) + ' Please add');
     return;
   }
 
