@@ -122,7 +122,7 @@ let prices = {
   'Sweet items': {100:180, 200:360, 250:450, 500:900},
   Cake: {500:800, 1000:1500},
   Role: {100:200, 200:400, 250:500, 500:1000},
-  Soda: {250:80, 500:150, 1000:280}
+  'Combo Pack': {1:999, 2:1899, 3:2799}
 };
 
 window.onload = function(){
@@ -288,7 +288,7 @@ function sendFullOrder(){
   }
 
   if(orderType=='Delivery' && (!date ||!time)){
-    alert('Date & Time must!');
+    alert('Delivery ku Date & Time must!');
     return;
   }
 
@@ -391,7 +391,7 @@ function cancelOrder(){
 // 3. PRINT BILL FUNCTION
 function printBill(){
   if(!lastOrder.orderNo){
-    alert('Cart Empty');
+    alert('First order pottu aprom print pannu machi');
     return;
   }
 
@@ -625,17 +625,19 @@ function closeHistory(){
 </div>
 
 <!-- SODA CATEGORY -->
-<div class="card" data-cat="soda">
-<img src="soda.jpg" alt="Soda" onclick="openModal(this.src)">
-<h2>Soda</h2>
-<select id="SodaSize" onchange="updatePrice('Soda')">
-<option value="250ml - Rs80">250ml - Rs80</option>
-<option value="500ml - Rs150">500ml - Rs150</option>
-<option value="1000ml - Rs280">1L - Rs280</option>
+<!-- COMBO PACK CATEGORY -->
+<div class="card" data-cat="combo">
+<img src="combo.jpg" alt="Combo Pack" onclick="openModal(this.src)">
+<h2>Combo Pack</h2>
+<select id="Combo PackSize" onchange="updatePrice('Combo Pack')">
+<option value="1 Pack - Rs999">1 Pack - Rs999</option>
+<option value="2 Pack - Rs1899">2 Pack - Rs1899</option>
+<option value="3 Pack - Rs2799">3 Pack - Rs2799</option>
 </select>
-<input type="number" id="SodaQty" value="1" min="1">
-<div class="price" id="SodaPrice">Rs.80</div>
-<button class="btn-add" onclick="addToCart('Soda', this)">+ Add to Cart</button>
+<input type="number" id="Combo PackQty" value="1" min="1">
+<div class="price" id="Combo PackPrice">Rs.999</div>
+<button class="btn-add" onclick="addToCart('Combo Pack', this)">+ Add to Cart</button>
+</div>
 </div>
 
 </div>
