@@ -275,7 +275,7 @@ function sendFullOrder(){
   }
 
   if(orderType=='Delivery' && (!date ||!time)){
-    alert('Delivery ku Date & Time must!');
+    alert('Date & Time must for Delivery!');
     return;
   }
 
@@ -354,11 +354,11 @@ function sendFullOrder(){
 
 function cancelOrder(){
   if(cart.length == 0){
-    alert('Cart already empty machi');
+    alert('Cart already empty');
     return;
   }
 
-  if(confirm('Order ah cancel panna poriya? Cart full ah clear aagidum.')){
+  if(confirm('Are you sure cancel the order?')){
     cart = [];
     couponApplied = 0;
     if(document.getElementById('couponCode')) document.getElementById('couponCode').value = '';
@@ -371,14 +371,14 @@ function cancelOrder(){
     document.getElementById('custAddress').value = '';
     document.getElementById('discount').value = '0';
     document.getElementById('delivery').value = '50';
-    alert('Order Cancelled! Cart clear aagiduchu ✅');
+    alert('Order Cancelled! ✅');
   }
 }
 
 // 3. PRINT BILL FUNCTION
 function printBill(){
   if(!lastOrder.orderNo){
-    alert('First order pottu aprom print pannu machi');
+    alert('If you need a print first order the items');
     return;
   }
 
