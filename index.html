@@ -94,7 +94,7 @@ body::before {
 </style>
 
 <script>
-let cart = [];
+let chart = [];
 let orderCount = localStorage.getItem('orderCount') || 0;
 let deliveryCharge = 50;
 let orderType = 'Delivery';
@@ -137,7 +137,7 @@ function setOrderType(type){
     document.getElementById('delivery-block').style.display = 'none';
     document.getElementById('custAddress').style.display = 'none';
   }
-  showCart();
+  showChart();
 }
 
 function filterCat(c){
@@ -174,7 +174,7 @@ function updatePrice(product){
   document.getElementById(product+"Price").innerText = 'Rs.' + price;
 }
 
-function addToCart(product, btn){
+function addToChart(product, btn){
   let size = document.getElementById(product+"Size").value;
   let grams = parseInt(size.split('g')[0]);
   let qty = parseInt(document.getElementById(product+"Qty").value);
@@ -186,7 +186,7 @@ function addToCart(product, btn){
     return;
   }
 
-  cart.push({product: product, size: size, grams: grams, qty: qty, price: price, total: total});
+  chart.push({product: product, size: size, grams: grams, qty: qty, price: price, total: total});
 
   btn.innerText = 'Added ✓';
   btn.classList.add('added');
@@ -196,7 +196,7 @@ function addToCart(product, btn){
 }
 
 function removeFromCart(index){
-  cart.splice(index, 1);
+  chart.splice(index, 1);
   showCart();
 }
 
@@ -212,7 +212,7 @@ function applyCoupon(){
     couponApplied = 0;
     alert('Invalid Coupon Code ❌');
   }
-  showCart();
+  showChart();
 }
 
 function showCart(){
@@ -638,7 +638,7 @@ function closeHistory(){
 <input type="number" id="discount" placeholder="Discount Rs - e.g: 50" value="0" min="0" oninput="showCart()">
 <input type="number" id="delivery" placeholder="Delivery Charge Rs" value="50" min="0" oninput="showCart()">
 
-<div id="cartSummary"></div>
+<div id="chartSummary"></div>
 <button class="btn-order" onclick="sendFullOrder()">4. Order All via WhatsApp</button>
 <button class="btn-print" onclick="printBill()">🖨️ Print Bill</button>
 <button class="btn-history" onclick="showHistory()">📋 Order History</button>
