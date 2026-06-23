@@ -384,14 +384,14 @@ function cancelOrder(){
     document.getElementById('custAddress').value = '';
     document.getElementById('discount').value = '0';
     document.getElementById('delivery').value = '50';
-    alert('Order Cancelled! Cart clear aagiduchu ✅');
+    alert('Order Cancelled!✅');
   }
 }
 
 // 3. PRINT BILL FUNCTION
 function printBill(){
   if(!lastOrder.orderNo){
-    alert('First order pottu aprom print pannu machi');
+    alert('Cart Empty');
     return;
   }
 
