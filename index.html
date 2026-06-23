@@ -371,7 +371,7 @@ function cancelOrder(){
     document.getElementById('custAddress').value = '';
     document.getElementById('discount').value = '0';
     document.getElementById('delivery').value = '50';
-    alert('Order Cancelled! Cart clear aagiduchu ✅');
+    alert('Order Cancelled! ✅');
   }
 }
 
@@ -407,7 +407,7 @@ function printBill(){
   ${lastOrder.orderType=='Delivery'? `<p style="text-align:right">Delivery: +Rs.${lastOrder.delivery}</p>` : ''}
   <p style="text-align:right;font-size:18px"><b>Grand Total: Rs.${lastOrder.grandTotal}</b></p>
   <hr>
-  <p style="text-align:center;font-size:12px">Thank You! Visit Again</p>
+  <p style="text-align:center;font-size:12px">Thank You! Order Again</p>
   </div>`;
 
   let win = window.open('', '', 'height=600,width=400');
@@ -636,7 +636,7 @@ function closeHistory(){
 
 <h3 style="margin-top:20px">3. Discount & Delivery</h3>
 <input type="number" id="discount" placeholder="Discount Rs - e.g: 50" value="0" min="0" oninput="showCart()">
-<input type="number" id="delivery" placeholder="Delivery Charge Rs" value="50" min="0" oninput="showCart()">
+<input type="number" id="delivery" placeholder="Delivery Charge Rs" value="150" min="0" oninput="showCart()">
 
 <div id="cartSummary"></div>
 <button class="btn-order" onclick="sendFullOrder()">4. Order All via WhatsApp</button>
