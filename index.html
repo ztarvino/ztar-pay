@@ -387,7 +387,7 @@ function cancelOrder(){
     document.getElementById('custAddress').value = '';
     document.getElementById('discount').value = '0';
     document.getElementById('delivery').value = '50';
-    alert('Order Cancelled!✅');
+    alert('Order Cancelled! Cart clear aagiduchu ✅');
   }
 }
 
@@ -680,7 +680,7 @@ function closeHistory(){
 </div>
 
 <!-- COMBO CATEGORY -->
-<div class="card" data-cat="combo">
+<div class="card" data-cat="combo" style="grid-column: 1 / -1; max-width:400px; margin:0 auto;">
 <img src="combo.jpg" alt="Combo Pack" onclick="openModal(this.src)">
 <h2>Combo Pack</h2>
 <select id="ComboPackSize" onchange="updatePrice('ComboPack')">
