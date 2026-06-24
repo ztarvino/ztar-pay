@@ -102,7 +102,7 @@ body::before {
 .dark.summary{color:#e0e0e0!important}
 .dark.summary div{color:#e0e0e0!important}
 .dark.total{color:#ff5252!important}
-.dark.cart-info{background:#1976D2!important; color:#fff!important}
+.dark.cart-info{background:#1976D2!important, color:#fff!important}
 .dark #cartItems p{color:#aaa!important}
 </style>
 
@@ -119,10 +119,13 @@ let prices = {
   Kadalai: {100:110, 200:220, 250:275, 500:550},
   Murukku: {100:120, 200:240, 250:300, 500:600},
   Laddu: {100:160, 200:320, 250:400, 500:800},
-  'Sweet items': {100:180, 200:360, 250:450, 500:900},
-  Cake: {500:800, 1000:1500},
-  Role: {100:200, 200:400, 250:500, 500:1000},
-  'Combo Pack': {1:999, 2:1899, 3:2799}
+  SweetItems: {100:180, 200:360, 250:450, 500:900},
+  Cake1: {500:800, 1000:1500}, // Veg Cake
+  Cake2: {500:950, 1000:1800}, // Birthday Cake
+  Cake3: {500:1000, 1000:1900}, // Wedding Cake
+  Role1: {100:200, 200:400, 250:500, 500:1000}, // Paneer Role
+  Role2: {100:250, 200:500, 250:625, 500:1250}, // Chicken Role
+  ComboPack: {1:999, 2:1899, 3:2799}
 };
 
 window.onload = function(){
@@ -182,14 +185,14 @@ function closeModal(){
 
 function updatePrice(product){
   let size = document.getElementById(product+"Size").value;
-  let grams = parseInt(size.split('g')[0]);
+  let grams = parseInt(size);
   let price = prices[product][grams];
   document.getElementById(product+"Price").innerText = 'Rs.' + price;
 }
 
 function addToCart(product, btn){
   let size = document.getElementById(product+"Size").value;
-  let grams = parseInt(size.split('g')[0]);
+  let grams = parseInt(size);
   let qty = parseInt(document.getElementById(product+"Qty").value);
   let price = prices[product][grams];
   let total = price * qty;
@@ -199,7 +202,7 @@ function addToCart(product, btn){
     return;
   }
 
-  cart.push({product: product, size: size, grams: grams, qty: qty, price: price, total: total});
+  cart.push({product: product, size: size+'g', grams: grams, qty: qty, price: price, total: total});
 
   btn.innerText = 'Added ✓';
   btn.classList.add('added');
@@ -384,14 +387,14 @@ function cancelOrder(){
     document.getElementById('custAddress').value = '';
     document.getElementById('discount').value = '0';
     document.getElementById('delivery').value = '50';
-    alert('Order Cancelled!✅');
+    alert('Order Cancelled! Cart clear aagiduchu ✅');
   }
 }
 
 // 3. PRINT BILL FUNCTION
 function printBill(){
   if(!lastOrder.orderNo){
-    alert('Cart Empty');
+    alert('First order pottu aprom print pannu machi');
     return;
   }
 
@@ -420,7 +423,7 @@ function printBill(){
   ${lastOrder.orderType=='Delivery'? `<p style="text-align:right">Delivery: +Rs.${lastOrder.delivery}</p>` : ''}
   <p style="text-align:right;font-size:18px"><b>Grand Total: Rs.${lastOrder.grandTotal}</b></p>
   <hr>
-  <p style="text-align:center;font-size:12px">Thank You! Order Again</p>
+  <p style="text-align:center;font-size:12px">Thank You! Visit Again</p>
   </div>`;
 
   let win = window.open('', '', 'height=600,width=400');
@@ -475,7 +478,7 @@ function closeHistory(){
 <button class="cat-btn" onclick="filterCat('sweet')">Sweets</button>
 <button class="cat-btn" onclick="filterCat('cake')">Cakes</button>
 <button class="cat-btn" onclick="filterCat('role')">Role</button>
-<button class="cat-btn" onclick="filterCat('combo')">Combo</button>
+<button class="cat-btn" onclick="filterCat('Combo')">Combo</button>
 </div>
 
 <h2 id="catTitle" style="text-align:center; margin:20px 0; color:#ff0000; font-size:24px; font-family:Georgia;">All Items</h2>
@@ -515,10 +518,10 @@ function closeHistory(){
 <img src="mixture.jpg" alt="Mixture" onclick="openModal(this.src)">
 <h2>Mixture</h2>
 <select id="MixtureSize" onchange="updatePrice('Mixture')">
-<option value="100g - Rs140">100g - Rs140</option>
-<option value="200g - Rs280">200g - Rs280</option>
-<option value="250g - Rs350">250g - Rs350</option>
-<option value="500g - Rs700">500g - Rs700</option>
+<option value="100">100g - Rs140</option>
+<option value="200">200g - Rs280</option>
+<option value="250">250g - Rs350</option>
+<option value="500">500g - Rs700</option>
 </select>
 <input type="number" id="MixtureQty" value="1" min="1">
 <div class="price" id="MixturePrice">Rs.140</div>
@@ -529,10 +532,10 @@ function closeHistory(){
 <img src="pakoda.jpg" alt="Pakoda" onclick="openModal(this.src)">
 <h2>Pakoda</h2>
 <select id="PakodaSize" onchange="updatePrice('Pakoda')">
-<option value="100g - Rs150">100g - Rs150</option>
-<option value="200g - Rs300">200g - Rs300</option>
-<option value="250g - Rs375">250g - Rs375</option>
-<option value="500g - Rs750">500g - Rs750</option>
+<option value="100">100g - Rs150</option>
+<option value="200">200g - Rs300</option>
+<option value="250">250g - Rs375</option>
+<option value="500">500g - Rs750</option>
 </select>
 <input type="number" id="PakodaQty" value="1" min="1">
 <div class="price" id="PakodaPrice">Rs.150</div>
@@ -543,10 +546,10 @@ function closeHistory(){
 <img src="kadalai.jpg" alt="Kadalai" onclick="openModal(this.src)">
 <h2>Kadalai</h2>
 <select id="KadalaiSize" onchange="updatePrice('Kadalai')">
-<option value="100g - Rs110">100g - Rs110</option>
-<option value="200g - Rs220">200g - Rs220</option>
-<option value="250g - Rs275">250g - Rs275</option>
-<option value="500g - Rs550">500g - Rs550</option>
+<option value="100">100g - Rs110</option>
+<option value="200">200g - Rs220</option>
+<option value="250">250g - Rs275</option>
+<option value="500">500g - Rs550</option>
 </select>
 <input type="number" id="KadalaiQty" value="1" min="1">
 <div class="price" id="KadalaiPrice">Rs.110</div>
@@ -557,10 +560,10 @@ function closeHistory(){
 <img src="murukku.jpg" alt="Murukku" onclick="openModal(this.src)">
 <h2>Murukku</h2>
 <select id="MurukkuSize" onchange="updatePrice('Murukku')">
-<option value="100g - Rs120">100g - Rs120</option>
-<option value="200g - Rs240">200g - Rs240</option>
-<option value="250g - Rs300">250g - Rs300</option>
-<option value="500g - Rs600">500g - Rs600</option>
+<option value="100">100g - Rs120</option>
+<option value="200">200g - Rs240</option>
+<option value="250">250g - Rs300</option>
+<option value="500">500g - Rs600</option>
 </select>
 <input type="number" id="MurukkuQty" value="1" min="1">
 <div class="price" id="MurukkuPrice">Rs.120</div>
@@ -572,10 +575,10 @@ function closeHistory(){
 <img src="laddu.jpg" alt="Laddu" onclick="openModal(this.src)">
 <h2>Laddu</h2>
 <select id="LadduSize" onchange="updatePrice('Laddu')">
-<option value="100g - Rs160">100g - Rs160</option>
-<option value="200g - Rs320">200g - Rs320</option>
-<option value="250g - Rs400">250g - Rs400</option>
-<option value="500g - Rs800">500g - Rs800</option>
+<option value="100">100g - Rs160</option>
+<option value="200">200g - Rs320</option>
+<option value="250">250g - Rs400</option>
+<option value="500">500g - Rs800</option>
 </select>
 <input type="number" id="LadduQty" value="1" min="1">
 <div class="price" id="LadduPrice">Rs.160</div>
@@ -583,125 +586,111 @@ function closeHistory(){
 </div>
 
 <div class="card" data-cat="sweet">
-<img src="sweet.jpg" alt="Sweet items" onclick="openModal(this.src)">
-<h2>Sweet items</h2>
-<select id="Sweet itemsSize" onchange="updatePrice('Sweet items')">
-<option value="100g - Rs180">100g - Rs180</option>
-<option value="200g - Rs360">200g - Rs360</option>
-<option value="250g - Rs450">250g - Rs450</option>
-<option value="500g - Rs900">500g - Rs900</option>
+<img src="sweet.jpg" alt="Sweet Items" onclick="openModal(this.src)">
+<h2>Sweet Items</h2>
+<select id="SweetItemsSize" onchange="updatePrice('SweetItems')">
+<option value="100">100g - Rs180</option>
+<option value="200">200g - Rs360</option>
+<option value="250">250g - Rs450</option>
+<option value="500">500g - Rs900</option>
 </select>
-<input type="number" id="Sweet itemsQty" value="1" min="1">
-<div class="price" id="Sweet itemsPrice">Rs.180</div>
-<button class="btn-add" onclick="addToCart('Sweet items', this)">+ Add to Cart</button>
+<input type="number" id="SweetItemsQty" value="1" min="1">
+<div class="price" id="SweetItemsPrice">Rs.180</div>
+<button class="btn-add" onclick="addToCart('SweetItems', this)">+ Add to Cart</button>
 </div>
 
-<!-- CAKES CATEGORY -->
-<!-- CAKE 1 -->
+<!-- CAKES CATEGORY - 3 TYPES -->
 <div class="card" data-cat="cake">
-<img src="cake1.jpg" alt="Chocolate Cake" onclick="openModal(this.src)">
-<h2>Chocolate Cake</h2>
-<div class="price">Rs. 800</div>
-<button class="btn-add" onclick="addToCart('Chocolate Cake', this)">+ Add to Cart</button>
-</div>
-
-<!-- CAKE 2 -->
-<div class="card" data-cat="cake">
-<img src="cake2.jpg" alt="Veg Cake" onclick="openModal(this.src)">
+<img src="cake1.jpg" alt="Veg Cake" onclick="openModal(this.src)">
 <h2>Veg Cake</h2>
-<div class="price">Rs. 950</div>
-<button class="btn-add" onclick="addToCart('Veg Cake', this)">+ Add to Cart</button>
-</div>
-
-<!-- CAKE 4 -->
-<div class="card" data-cat="cake">
-<img src="cake4.jpg" alt="Birthday Cake" onclick="openModal(this.src)">
-<h2>Birthday Cake</h2>
-<div class="price">Rs. 1,300</div>
-<button class="btn-add" onclick="addToCart('Birthday Cake', this)">+ Add to Cart</button>
-</div>
-
-<!-- CAKE 9 -->
-<div class="card" data-cat="cake">
-<img src="cake9.jpg" alt="Wedding Cake" onclick="openModal(this.src)">
-<h2>Wedding Cake</h2>
-<div class="price">Rs. 1000</div>
-<button class="btn-add" onclick="addToCart('Wedding Cake', this)">+ Add to Cart</button>
-</div>
-
-<!-- ROLE CATEGORY -->
-
-<!-- Paneer Role -->
-<div class="card" data-cat="role">
-<img src="vegrole1.jpg" alt="Paneer Role" onclick="openModal(this.src)">
-<h2>Paneer Role</h2>
-<select id="Role1_Size" onchange="updatePrice('Role1')">
-<option value="200">Rs120</option>
-<option value="250">Rs150</option>
-<option value="300">Rs180</option>
+<select id="Cake1Size" onchange="updatePrice('Cake1')">
+<option value="500">500g - Rs800</option>
+<option value="1000">1kg - Rs1500</option>
 </select>
-<input type="number" id="Role1_Qty" value="1" min="1">
-<div class="price" id="Role1_Price">Rs. 120</div>
+<input type="number" id="Cake1Qty" value="1" min="1">
+<div class="price" id="Cake1Price">Rs.800</div>
+<button class="btn-add" onclick="addToCart('Cake1', this)">+ Add to Cart</button>
+</div>
+
+<div class="card" data-cat="cake">
+<img src="cake2.jpg" alt="Birthday Cake" onclick="openModal(this.src)">
+<h2>Birthday Cake</h2>
+<select id="Cake2Size" onchange="updatePrice('Cake2')">
+<option value="500">500g - Rs950</option>
+<option value="1000">1kg - Rs1800</option>
+</select>
+<input type="number" id="Cake2Qty" value="1" min="1">
+<div class="price" id="Cake2Price">Rs.950</div>
+<button class="btn-add" onclick="addToCart('Cake2', this)">+ Add to Cart</button>
+</div>
+
+<div class="card" data-cat="cake">
+<img src="cake3.jpg" alt="Wedding Cake" onclick="openModal(this.src)">
+<h2>Wedding Cake</h2>
+<select id="Cake3Size" onchange="updatePrice('Cake3')">
+<option value="500">500g - Rs1000</option>
+<option value="1000">1kg - Rs1900</option>
+</select>
+<input type="number" id="Cake3Qty" value="1" min="1">
+<div class="price" id="Cake3Price">Rs.1000</div>
+<button class="btn-add" onclick="addToCart('Cake3', this)">+ Add to Cart</button>
+</div>
+
+<!-- ROLE CATEGORY - 2 TYPES -->
+<div class="card" data-cat="role">
+<img src="role1.jpg" alt="Veg Role" onclick="openModal(this.src)">
+<h2>Veg Role</h2>
+<select id="Role1Size" onchange="updatePrice('Role1')">
+<option value="100">100g - Rs200</option>
+<option value="200">200g - Rs400</option>
+<option value="250">250g - Rs500</option>
+<option value="500">500g - Rs1000</option>
+</select>
+<input type="number" id="Role1Qty" value="1" min="1">
+<div class="price" id="Role1Price">Rs.200</div>
 <button class="btn-add" onclick="addToCart('Role1', this)">+ Add to Cart</button>
 </div>
 
-<!-- Veg Mayo Role -->
 <div class="card" data-cat="role">
-<img src="vegrole2.jpg" alt="Veg Mayo Role" onclick="openModal(this.src)">
-<h2>Veg Mayo Role</h2>
-<select id="Role2_Size" onchange="updatePrice('Role2')">
-<option value="200">Rs100</option>
-<option value="250">Rs130</option>
-<option value="300">Rs160</option>
-</select>
-<input type="number" id="Role2_Qty" value="1" min="1">
-<div class="price" id="Role2_Price">Rs. 100</div>
-<button class="btn-add" onclick="addToCart('Role2', this)">+ Add to Cart</button>
-</div>
-
-<!-- Non Veg Role -->
-<div class="card" data-cat="role">
-<img src="chickenrole1.jpg" alt="Chicken Role" onclick="openModal(this.src)">
+<img src="role1.jpg" alt="Chicken Role" onclick="openModal(this.src)">
 <h2>Chicken Role</h2>
-<select id="Role3_Size" onchange="updatePrice('Role3')">
-<option value="200">Rs150</option>
-<option value="250">Rs180</option>
-<option value="300">Rs210</option>
+<select id="Role1Size" onchange="updatePrice('Role1')">
+<option value="100">100g - Rs200</option>
+<option value="200">200g - Rs400</option>
+<option value="250">250g - Rs500</option>
+<option value="500">500g - Rs1000</option>
 </select>
-<input type="number" id="Role3_Qty" value="1" min="1">
-<div class="price" id="Role3_Price">Rs. 150</div>
-<button class="btn-add" onclick="addToCart('Role3', this)">+ Add to Cart</button>
+<input type="number" id="Role1Qty" value="1" min="1">
+<div class="price" id="Role1Price">Rs.200</div>
+<button class="btn-add" onclick="addToCart('Role1', this)">+ Add to Cart</button>
 </div>
 
-<!-- Chicken Cheese Role -->
 <div class="card" data-cat="role">
-<img src="chickenrole2.jpg" alt="Chicken Cheese Role" onclick="openModal(this.src)">
-<h2>Chicken Cheese Role</h2>
-<select id="Role4_Size" onchange="updatePrice('Role4')">
-<option value="200">Rs180</option>
-<option value="250">Rs210</option>
-<option value="300">Rs240</option>
+<img src="role1.jpg" alt="Fish Role" onclick="openModal(this.src)">
+<h2>Fish Role</h2>
+<select id="Role1Size" onchange="updatePrice('Role1')">
+<option value="100">100g - Rs200</option>
+<option value="200">200g - Rs400</option>
+<option value="250">250g - Rs500</option>
+<option value="500">500g - Rs1000</option>
 </select>
-<input type="number" id="Role4_Qty" value="1" min="1">
-<div class="price" id="Role4_Price">Rs. 180</div>
-<button class="btn-add" onclick="addToCart('Role4', this)">+ Add to Cart</button>
+<input type="number" id="Role1Qty" value="1" min="1">
+<div class="price" id="Role1Price">Rs.200</div>
+<button class="btn-add" onclick="addToCart('Role1', this)">+ Add to Cart</button>
 </div>
 
-<!-- COMBO PACK CATEGORY -->
+<!-- COMBO CATEGORY -->
 <div class="card" data-cat="combo">
 <img src="combo.jpg" alt="Combo Pack" onclick="openModal(this.src)">
 <h2>Combo Pack</h2>
-<select id="Combo PackSize" onchange="updatePrice('Combo Pack')">
-<option value="1 Pack - Rs2,222">1 Pack - Rs2,222</option>
-<option value="2 Pack - Rs3,333">2 Pack - Rs3,333</option>
-<option value="3 Pack - Rs4,444">3 Pack - Rs4,444</option>
+<select id="ComboPackSize" onchange="updatePrice('ComboPack')">
+<option value="1">1 Pack - Rs2222</option>
+<option value="2">2 Pack - Rs4444</option>
+<option value="3">3 Pack - Rs6666</option>
 </select>
-<input type="number" id="Combo PackQty" value="1" min="1">
-<div class="price" id="Combo PackPrice">Rs.2,222</div>
-<button class="btn-add" onclick="addToCart('Combo Pack', this)">+ Add to Cart</button>
-</div>
-</div>
-
+<input type="number" id="ComboPackQty" value="1" min="1">
+<div class="price" id="ComboPackPrice">Rs.2222</div>
+<button class="btn-add" onclick="addToCart('ComboPack', this)">+ Add to Cart</button>
 </div>
 
 <div class="cart-box">
@@ -738,5 +727,6 @@ function closeHistory(){
 <div id="historyBody"></div>
 </div>
 </div>
+
 </body>
 </html>
