@@ -680,7 +680,7 @@ function closeHistory(){
 </div>
 
 <!-- COMBO CATEGORY -->
-<div class="card" data-cat="combo" style="grid-column: 1 / -1; max-width:400px; margin:0 auto;">
+<div class="card" data-cat="combo" style="grid-column: 1 / -1; max-width:400px; margin:20px auto;">
 <img src="combo.jpg" alt="Combo Pack" onclick="openModal(this.src)">
 <h2>Combo Pack</h2>
 <select id="ComboPackSize" onchange="updatePrice('ComboPack')">
@@ -693,7 +693,7 @@ function closeHistory(){
 <button class="btn-add" onclick="addToCart('ComboPack', this)">+ Add to Cart</button>
 </div>
 
-<div class="cart-box">
+<div class="cart-box" style="grid-column: 1 / -1; max-width:500px; margin:20px auto;">
 <h3>🛒 Your Cart</h3>
 <div class="cart-info" id="cartInfo"></div>
 <div id="cartItems"><p style="color:gray">Cart empty</p></div>
