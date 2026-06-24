@@ -157,7 +157,7 @@ function filterCat(c){
   document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
   event.target.classList.add('active');
 
-  let title = c=='all'?'All Items': c=='snacks'?'Snacks': c=='sweet'?'Sweets': c=='cake'?'Cakes': c=='role'?'Role': 'Soda';
+  let title = c=='all'?'All Items': c=='snacks'?'Snacks': c=='sweet'?'Sweets': c=='cake'?'Cakes': c=='role'?'Role': 'Combo';
   document.getElementById('catTitle').innerText = title;
 
   document.querySelectorAll('.card').forEach(x=>x.style.display=(c=='all'||x.dataset.cat==c)?'block':'none');
@@ -475,7 +475,7 @@ function closeHistory(){
 <button class="cat-btn" onclick="filterCat('sweet')">Sweets</button>
 <button class="cat-btn" onclick="filterCat('cake')">Cakes</button>
 <button class="cat-btn" onclick="filterCat('role')">Role</button>
-<button class="cat-btn" onclick="filterCat('soda')">Soda</button>
+<button class="cat-btn" onclick="filterCat('combo')">Combo</button>
 </div>
 
 <h2 id="catTitle" style="text-align:center; margin:20px 0; color:#ff0000; font-size:24px; font-family:Georgia;">All Items</h2>
@@ -597,16 +597,36 @@ function closeHistory(){
 </div>
 
 <!-- CAKES CATEGORY -->
+<!-- CAKE 1 -->
 <div class="card" data-cat="cake">
-<img src="cake.jpg" alt="Cake" onclick="openModal(this.src)">
-<h2>Cake</h2>
-<select id="CakeSize" onchange="updatePrice('Cake')">
-<option value="500g - Rs800">500g - Rs800</option>
-<option value="1000g - Rs1500">1kg - Rs1500</option>
-</select>
-<input type="number" id="CakeQty" value="1" min="1">
-<div class="price" id="CakePrice">Rs.800</div>
-<button class="btn-add" onclick="addToCart('Cake', this)">+ Add to Cart</button>
+<img src="cake1.jpg" alt="Chocolate Cake" onclick="openModal(this.src)">
+<h2>Chocolate Cake</h2>
+<div class="price">Rs. 800</div>
+<button class="btn-add" onclick="addToCart('Chocolate Cake', this)">+ Add to Cart</button>
+</div>
+
+<!-- CAKE 2 -->
+<div class="card" data-cat="cake">
+<img src="cake2.jpg" alt="Vanilla Cake" onclick="openModal(this.src)">
+<h2>Vanilla Cake</h2>
+<div class="price">Rs. 950</div>
+<button class="btn-add" onclick="addToCart('Vanilla Cake', this)">+ Add to Cart</button>
+</div>
+
+<!-- CAKE 4 -->
+<div class="card" data-cat="cake">
+<img src="cake4.jpg" alt="Red Velvet" onclick="openModal(this.src)">
+<h2>Red Velvet</h2>
+<div class="price">Rs. 1,300</div>
+<button class="btn-add" onclick="addToCart('Red Velvet', this)">+ Add to Cart</button>
+</div>
+
+<!-- CAKE 9 -->
+<div class="card" data-cat="cake">
+<img src="cake9.jpg" alt="Fruit Cake" onclick="openModal(this.src)">
+<h2>Fruit Cake</h2>
+<div class="price">Rs. 1000</div>
+<button class="btn-add" onclick="addToCart('Fruit Cake', this)">+ Add to Cart</button>
 </div>
 
 <!-- ROLE CATEGORY -->
@@ -617,25 +637,24 @@ function closeHistory(){
 <option value="100g - Rs200">100g - Rs200</option>
 <option value="200g - Rs400">200g - Rs400</option>
 <option value="250g - Rs500">250g - Rs500</option>
-<option value="500g - Rs1000">500g - Rs1000</option>
+<option value="500g - Rs1,000">500g - Rs1,000</option>
 </select>
 <input type="number" id="RoleQty" value="1" min="1">
 <div class="price" id="RolePrice">Rs.200</div>
 <button class="btn-add" onclick="addToCart('Role', this)">+ Add to Cart</button>
 </div>
 
-<!-- SODA CATEGORY -->
 <!-- COMBO PACK CATEGORY -->
 <div class="card" data-cat="combo">
 <img src="combo.jpg" alt="Combo Pack" onclick="openModal(this.src)">
 <h2>Combo Pack</h2>
 <select id="Combo PackSize" onchange="updatePrice('Combo Pack')">
-<option value="1 Pack - Rs999">1 Pack - Rs999</option>
-<option value="2 Pack - Rs1899">2 Pack - Rs1899</option>
-<option value="3 Pack - Rs2799">3 Pack - Rs2799</option>
+<option value="1 Pack - Rs2,222">1 Pack - Rs2,222</option>
+<option value="2 Pack - Rs3,333">2 Pack - Rs3,333</option>
+<option value="3 Pack - Rs4,444">3 Pack - Rs4,444</option>
 </select>
 <input type="number" id="Combo PackQty" value="1" min="1">
-<div class="price" id="Combo PackPrice">Rs.999</div>
+<div class="price" id="Combo PackPrice">Rs.2,222</div>
 <button class="btn-add" onclick="addToCart('Combo Pack', this)">+ Add to Cart</button>
 </div>
 </div>
