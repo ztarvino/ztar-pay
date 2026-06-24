@@ -370,11 +370,11 @@ function sendFullOrder(){
 
 function cancelOrder(){
   if(cart.length == 0){
-    alert('Cart already empty machi');
+    alert('Cart already empty');
     return;
   }
 
-  if(confirm('Order ah cancel panna poriya? Cart full ah clear aagidum.')){
+  if(confirm('Are you sure?')){
     cart = [];
     couponApplied = 0;
     if(document.getElementById('couponCode')) document.getElementById('couponCode').value = '';
@@ -394,7 +394,7 @@ function cancelOrder(){
 // 3. PRINT BILL FUNCTION
 function printBill(){
   if(!lastOrder.orderNo){
-    alert('First order pottu aprom print pannu machi');
+    alert('Cart Empty');
     return;
   }
 
