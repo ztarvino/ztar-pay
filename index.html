@@ -600,7 +600,7 @@ function closeHistory(){
 </div>
 
 <!-- CAKES CATEGORY - 3 TYPES -->
-<div class="card" data-cat="caje1">
+<div class="card" data-cat="cake">
 <img src="cake1.jpg" alt="Veg Cake" onclick="openModal(this.src)">
 <h2>Veg Cake</h2>
 <select id="Cake1Size" onchange="updatePrice('Cake1')">
@@ -612,16 +612,16 @@ function closeHistory(){
 <button class="btn-add" onclick="addToCart('Cake1', this)">+ Add to Cart</button>
 </div>
 
-<div class="card" data-cat="birthday">
-<img src="birthday.jpg" alt="birthday" onclick="openModal(this.src)">
-<h2>birthday</h2>
-<select id="Cake2Size" onchange="updatePrice('birthday')">
+<div class="card" data-cat="cake">
+<img src="cake2.jpg" alt="Birthday Cake" onclick="openModal(this.src)">
+<h2>Birthday Cake</h2>
+<select id="Cake2Size" onchange="updatePrice('Cake2')">
 <option value="500">500g - Rs950</option>
 <option value="1000">1kg - Rs1800</option>
 </select>
-<input type="number" id="birthdayQty" value="1" min="1">
-<div class="price" id="birthdayPrice">Rs.950</div>
-<button class="btn-add" onclick="addToCart('birthday', this)">+ Add to Cart</button>
+<input type="number" id="Cake2Qty" value="1" min="1">
+<div class="price" id="Cake2Price">Rs.950</div>
+<button class="btn-add" onclick="addToCart('Cake2', this)">+ Add to Cart</button>
 </div>
 
 <div class="card" data-cat="cake">
