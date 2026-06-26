@@ -678,6 +678,19 @@ function closeHistory(){
 <div class="price" id="Role1Price">Rs.200</div>
 <button class="btn-add" onclick="addToCart('Role1', this)">+ Add to Cart</button>
 </div>
+<!-- CHICKEN ROLL CATEGORY -->
+<div class="card" data-cat="snacks">
+<img src="chicken-roll.jpg" alt="Chicken Roll" onclick="openModal(this.src)">
+<h2>Chicken Roll</h2>
+<select id="ChickenRollSize" onchange="updatePrice('ChickenRoll')">
+<option value="4">4 Pcs - Rs400</option>
+<option value="8">8 Pcs - Rs750</option>
+<option value="12">12 Pcs - Rs1100</option>
+</select>
+<input type="number" id="ChickenRollQty" value="1" min="1">
+<div class="price" id="ChickenRollPrice">Rs.400</div>
+<button class="btn-add" onclick="addToCart('ChickenRoll', this)">+ Add to Cart</button>
+</div>
 
 <!-- COMBO CATEGORY -->
 <div class="card" data-cat="combo" style="grid-column: 1 / -1; max-width:400px; margin:20px auto;">
@@ -715,5 +728,115 @@ function closeHistory(){
 <p>Stay smart with ZTAR PAY</p>
 <p>For more Details 0094778465161</p>
 </footer>
+
+<script>
+let cart = [];
+let prices = {
+  'ChickenRoll': {4:400, 8:750, 12:1100},
+  'ComboPack': {1:2222, 2:4444, 3:6666}
+};
+
+// 1. Category Filter
+function filterCategory(cat) {
+  let cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    if(cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// 2. Price Update - Size change panna
+function updatePrice(item) {
+  let size = document.getElementById(item+'Size').value;
+  let price = prices[item][size];
+  document.getElementById(item+'Price').innerText = 'Rs.' + price;
+}
+
+// 3. Add to Cart
+function addToCart(item, btn) {
+  let size = document.getElementById(item+'Size').value;
+  let qty = parseInt(document.getElementById(item+'Qty').value);
+  let price = prices[item][size];
+  let name = item === 'ChickenRoll'? 'Chicken Roll ' + size + 'pcs' : 'Combo Pack ' + size;
+
+  // Same item irundha qty increase pannu
+  let existing = cart.find(x => x.name === name);
+  if(existing){
+    existing.qty += qty;
+  } else {
+    cart.push({name: name, price: price, qty: qty});
+  }
+
+  btn.innerText = '✓ Added';
+  setTimeout(()=> btn.innerText = '+ Add to Cart', 1000);
+  showCart();
+}
+
+// 4. Show Cart
+function showCart() {
+  let cartDiv = document.getElementById('cartItems');
+  let infoDiv = document.getElementById('cartInfo');
+  let summaryDiv = document.getElementById('cartSummary');
+
+  if(cart.length === 0){
+    cartDiv.innerHTML = '<p style="color:gray">Cart empty</p>';
+    summaryDiv.innerHTML = '';
+    return;
+  }
+
+  let html = '';
+  let subtotal = 0;
+  cart.forEach((item, i) => {
+    html += `<div style="display:flex; justify-content:space-between; margin:8px 0;">
+      <span>${item.name} x ${item.qty}</span>
+      <span>Rs.${item.price * item.qty}
+        <button onclick="removeItem(${i})" style="color:red; border:none; background:none;">x</button>
+      </span>
+    </div>`;
+    subtotal += item.price * item.qty;
+  });
+  cartDiv.innerHTML = html;
+
+  let discount = parseInt(document.getElementById('discount').value) || 0;
+  let delivery = parseInt(document.getElementById('delivery').value) || 0;
+  let total = subtotal - discount + delivery;
+
+  summaryDiv.innerHTML = `
+    <hr>
+    <div style="display:flex; justify-content:space-between;"><span>Subtotal:</span><span>Rs.${subtotal}</span></div>
+    <div style="display:flex; justify-content:space-between;"><span>Discount:</span><span>- Rs.${discount}</span></div>
+    <div style="display:flex; justify-content:space-between;"><span>Delivery:</span><span>+ Rs.${delivery}</span></div>
+    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:18px; margin-top:8px;"><span>Total:</span><span>Rs.${total}</span></div>
+  `;
+  infoDiv.innerText = cart.length + ' items in cart';
+}
+
+// 5. Remove Item
+function removeItem(i){
+  cart.splice(i,1);
+  showCart();
+}
+
+// 6. Cancel Order
+function cancelOrder(){
+  if(confirm('Clear full cart?')){
+    cart = [];
+    showCart();
+ }
+
+</body>
+</html>
+
+<!-- NEW: HISTORY MODAL -->
+<div id="historyModal" class="history-modal" onclick="closeHistory()">
+<div class="history-content" onclick="event.stopPropagation()">
+<span class="close" onclick="closeHistory()">&times;</span>
+<div id="historyBody"></div>
+</div>
+</div>
+
 </body>
 </html>
